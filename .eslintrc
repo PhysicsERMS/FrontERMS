@@ -1,0 +1,36 @@
+{
+  "extends": "eslint-config-airbnb",
+  "globals": {
+    "APP": true, // 允许全局变量APP,
+    "window": true
+  },
+  "plugins": [
+    "react",
+    "import"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"]
+      }
+    }
+  },
+  "rules": {
+    "no-console": 0,
+    "react/no-multi-comp": 0,
+    "react/prop-types": 0,
+    "import/no-unresolved": [2, { "commonjs": true }],
+    "import/no-duplicates": 2,
+    "complexity": [2, 15],
+    "max-depth": [2, 3],
+    "max-statements": [2, 50],
+    "max-nested-callbacks": [2, 3],
+    "camelcase": 2,
+    // "linebreak-style": ["error", "windows"]//允许windows开发环境
+    "linebreak-style": 0
+  }
+}

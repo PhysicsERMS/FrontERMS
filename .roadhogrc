@@ -1,0 +1,33 @@
+{
+  "entry": "src/entry/*.js",
+  "disableCSSModules": false,
+  "multipage": true,
+  "autoprefixer": {
+    "browsers": [
+        "last 2 versions"
+    ]
+  },
+  "env": {
+    "development": {
+      "extraBabelPlugins": [
+        "dva-hmr",
+        "transform-runtime",
+        ["import", { "libraryName": "antd", "style": true }]
+      ]
+    },
+    "production": {
+      "extraBabelPlugins": [
+        "transform-runtime",
+        "dva-hmr",
+        ["import", { "libraryName": "antd", "style": "css" }]
+      ]
+    }
+  },
+  "proxy": {
+    "/socket.io": {
+      "target": "http://30.87.242.27:9092",
+      "changeOrigin": true,
+      "pathRewrite": { "^/api" : "" }
+    }
+  }
+}

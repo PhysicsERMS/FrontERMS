@@ -1,0 +1,182 @@
+// 定义LESS公共方法。只在LESS文件中引用。
+@color-light-black: #51514F;
+@color-green: #7ad23d;
+@color-chain-blue:#2db7f5;
+@color-grey: #DCDCDC;
+@color-chain-blue: #2db7f5;
+@color-chain-blue-bg: #2db7f5;
+@color-light-red: #ed2323;
+@color-dark-red: #d81e1f;
+@color-orange: #2db7f5;
+@color-light-gray: #f4f5f9;
+@color-light-blue: #F1F8FF;
+@color-deep-blue: #1f64e3;
+@color-center-blue: #9bd7f3;
+@color-light-orange: #FF6600;
+@color-nav-green: #46D7AF;
+@color-nav-orange: #FF8415;
+@color-nav-blue: #65ACF1;
+@color-nav-red: #FF5A59;
+@color-nav-purple: #8E7DF2;
+@color-nav-blue-green: #0FD5E2;
+@color-nav-black: #7F8E95;
+
+// 连锁color
+@color-chain-blue: #2a9cf5;
+@color-chain-orange: #ff6501;
+@color-333: #333;
+@color-666: #666;
+@color-999: #999;
+@color-e4: #e4e4e4;
+@color-f4: #f4f4f4;
+@color-c8: #c8c8c8;
+
+.bdr(@r: 2px) {
+  -ms-border-radius: @r;
+  -moz-border-radius: @r;
+  -webkit-border-radius: @r;
+  border-radius: @r;
+}
+
+.fts(@s: 1.4rem) {
+  font-size: @s;
+}
+
+.h-fts(@s: 1.6rem) {
+  font-size: @s;
+  font-weight: normal;
+}
+
+.bg-c(@c) {
+  background-color: @c;
+}
+
+.wh(@w, @h) {
+  width: @w;
+  height: @h;
+}
+
+//圆
+.circle(@r) {
+  .wh(@r, @r);
+  overflow: hidden;
+  .bdr(@r/2);
+}
+
+// 旋转  @d 角度
+.rotate(@d) {
+  -webkit-transform: rotate(@d);
+  -ms-transform: rotate(@d);
+  -moz-transform: rotate(@d);
+  transform: rotate(@d);
+}
+
+// transition动画
+.transition(@attr, @time) {
+  -ms-transition: @attr @time;
+  -moz-transition: @attr @time;
+  -webkit-transition: @attr @time;
+  transition: @attr @time;
+}
+
+// 下拉框实心三角  @w:width  @c:color
+.icon-arrow-down(@w, @c:#333) {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: @w solid @c;
+  border-left: @w solid transparent;
+  border-right: @w solid transparent;
+}
+
+//div指示性三角 @w:宽高 @d:旋转角度   @bc:background-color
+.arrow-box(@w, @d, @bc) {
+  content: '';
+  position: absolute;
+  .wh(@w, @w);
+  .rotate(@d);
+  background-color: @bc;
+}
+
+//超出文字 省略号   @w:width
+.text-over(@w: 100%) {
+  width: @w;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// 超出文字 省略号 多行
+.text-over-lines(@line: 2) {
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  display: -webkit-box; //必需
+  -webkit-line-clamp: @line; //表示需要显示几行
+  -webkit-box-orient: vertical;
+}
+
+// box
+.display-box() {
+  display: flex; //IE
+  width: 100%; //火狐下，需要设置box当前元素的宽度
+
+}
+
+.display-box-flex(@flex: 1) {
+  flex: @flex; //IE
+  -moz-box-flex: @flex;
+  -webkit-box-flex: @flex;
+  box-flex: @flex;
+  overflow: hidden;
+}
+
+//box布局下元素的对齐方式 @d  left,center,end
+.box-pack(@d) {
+  -webkit-box-pack: @d;
+  box-pack: @d;
+}
+
+//a标签块级链接
+.a-block() {
+  position: absolute;
+  top: 0;
+  left: 0;
+  .wh(100%, 100%);
+  z-index: 999;
+}
+
+//弹出层透明背景层  @p透明度
+.layer(@p: .5) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  .wh(100%, 100%);
+  background-color: rgba(0, 0, 0, @p);
+  z-index: 9999;
+}
+
+//渐变
+.gradient(@s, @e) {
+  background: -webkit-linear-gradient(top, @s, @e);
+  background: linear-gradient(top, @s, @e);
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(@s), to(@e));
+}
+
+//box 垂直水平居中显示
+.box-center() {
+  /* Firefox */
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  /* Safari、Opera 以及 Chrome */
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  box-pack: center;
+  box-align: center;
+}
+
+//定位 垂直水平居中显示
+
+
