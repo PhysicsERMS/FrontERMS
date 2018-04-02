@@ -24,15 +24,28 @@
 	* common(公共样式文件)
 	* components（所有组件）
 		* common （公共组件）
+    * teacher（与老师相关组件）
+    * student（与学生相关组件）
+    * admin（与管理员相关组件）
 	* entry （页面入口文件）
 	* images （所有依赖的图片）
 	* models
 		* app.js (主框架modal)
+		* teacher（与老师相关modal）
+        * student（与学生相关modal）
+        * admin（与管理员相关modal）
 	* routes （路由配置）
-		* router.jsx 	（路由主入口）
+		* teacher（与老师相关容器组件）
+        * student（与学生相关容器组件）
+        * admin（与管理员相关容器组件）
+	* router.jsx 	（路由主入口）
 	* services (http下所有调用的接口，websocket暂时用不到这个)
 		* app.js 
+		* teacher（与老师相关services）
+        * student（与学生相关services）
+        * admin（与管理员相关services）
 	* utils（公共的方法）		
+		
 
 		
 

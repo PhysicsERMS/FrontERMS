@@ -18,7 +18,7 @@ export default {
     user: {},
     isLogin: false,
     permissions: {
-      visit: ['1'],
+      visit: ['1', '2'],
     },
     menu: [
       {
@@ -26,6 +26,12 @@ export default {
         icon: 'laptop',
         name: 'Dashboard',
         route: '/dashboard',
+      },
+      {
+        id: '2',
+        icon: 'laptop',
+        name: '学生管理',
+        route: '/admin/student',
       },
     ],
     menuPopoverVisible: false,

@@ -1,6 +1,6 @@
 const EnumRoleType = {
-  ADMIN: 'admin',
-  DEFAULT: 'admin',
+  ADMIN: 'Admin',
+  DEFAULT: 'Admin',
   DEVELOPER: 'developer',
 };
 

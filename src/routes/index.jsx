@@ -11,6 +11,10 @@ const routes = [
     path: '/dashboard',
     component: require('./Dashboard'),
   },
+  {
+    path: '/admin/student',
+    component: require('./Admin/Student'),
+  },
 ];
 
 const Router = ({ history, app }) => {

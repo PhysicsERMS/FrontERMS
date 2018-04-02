@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import pathToRegexp from 'path-to-regexp';
 import { connect } from 'dva';
-import io from '../utils/socket.io';
+import { Card } from 'antd';
 import NProgress from 'nprogress';
 import { Helmet } from 'react-helmet';
+import io from '../utils/socket.io';
 import { Layout, Loader } from '../components';
 import '../themes/index.less';
 import Error from './error/index';
@@ -113,7 +114,9 @@ const App = ({ children, dispatch, report, loading, location }) => {
           <Bread {...breadProps} />
           <div className={styles.container}>
             <div className={styles.content}>
-              {hasPermission ? children : <Error />}
+              <Card bordered={false}>
+                {hasPermission ? children : <Error />}
+              </Card>
             </div>
           </div>
           <Footer />

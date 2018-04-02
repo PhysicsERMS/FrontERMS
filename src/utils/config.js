@@ -3,9 +3,9 @@ const APIV2 = '/api/v2';
 
 
 module.exports = {
-  name: '云账号中心',
+  name: '验数据处理系统',
   prefix: 'rt-report',
-  footerText: '辰森云账号中心 v1.0',
+  footerText: 'UPC大学物理实验数据处理系统 v1.0',
   SOCKET_ADDRESS: 'http://rtreport.choicesaas.cn:9789',
   // SOCKET_ADDRESS: '30.87.242.24:8081',
   // SOCKET_ADDRESS: '30.87.245.31:8081',
