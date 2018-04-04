@@ -289,6 +289,13 @@ const delSession = (name) => {
   sessionStorage.removeItem(name);
 };
 
+// 截取字符串
+const cutStr = (str, len) => {
+  if (str.length <= len) {
+    return str;
+  }
+  return `${str.substr(0, len)}......`;
+};
 module.exports = {
   config,
   request,
@@ -318,4 +325,5 @@ module.exports = {
   saveSession,
   getSession,
   delSession,
+  cutStr,
 };

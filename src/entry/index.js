@@ -16,7 +16,9 @@ app.use(createLoading());
 app.model(require('../models/app'));
 app.model(require('../models/login'));
 app.model(require('../models/dashboard'));
+app.model(require('../models/Admin/home'));
 app.model(require('../models/Admin/student'));
+app.model(require('../models/Teacher/myExperiment'));
 
 // 4. Router
 app.router(require('../routes'));

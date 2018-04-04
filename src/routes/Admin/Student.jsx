@@ -9,19 +9,10 @@ import List from '../../components/Admin/Student/list';
 import Search from '../../components/Admin/Student/search';
 
 const Student = ({ dispatch, state }) => {
-  const { loading, searchInfo, status, listData, pagination } = state.adminStudent;
+  const { loading, searchInfo, listData, pagination } = state.adminStudent;
 
   const searchProps = {
     searchInfo,
-    status,
-    // onSelect(value) {
-    //   dispatch({
-    //     type: 'adminStudent/updateState',
-    //     payload: {
-    //       status: value,
-    //     },
-    //   });
-    // },
     onChange(value) {
       dispatch({
         type: 'adminStudent/updateState',

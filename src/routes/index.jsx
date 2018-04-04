@@ -1,19 +1,28 @@
 /**
  * Created by yunbaoyuan on 2017/9/4.
  */
+import React from 'react';
 import RouterConfig from '../router';
+import Login from './Login';
+import AHome from './Admin/Home';
+import AStudent from './Admin/Student';
+import TMyExperiment from './Teacher/MyExperiment';
 
 const routes = [
   {
     path: '/login',
-    component: require('./Login'),
+    component: Login,
   }, {
-    path: '/dashboard',
-    component: require('./Dashboard'),
+    path: '/admin/home',
+    component: AHome,
   },
   {
     path: '/admin/student',
-    component: require('./Admin/Student'),
+    component: AStudent,
+  },
+  {
+    path: '/teacher/myExperiment',
+    component: TMyExperiment,
   },
 ];
 

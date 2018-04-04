@@ -1,44 +1,34 @@
 /**
- * Date：2018/4/2
+ * Date：2018/4/3
  * Author：Wangtaidong
  */
 import { message } from 'antd';
-import { inquire } from '../../services/Admin/student';
+import { inquire } from '../../services/Admin/home';
 
 export default {
-  namespace: 'adminStudent',
+  namespace: 'adminHome',
   state: {
     loading: false,
-    searchInfo: '',
-    listData: [{  // 这里只是模拟数据
-      id: 1,
-      number: 1409030116,
-      name: '王泰东',
-      college: '理学院',
-      class: '应用物理1402',
-      phone: '18560684220',
-    }, {
-      id: 2,
-      number: 1409030117,
-      name: '王泰东',
-      college: '理学院',
-      class: '应用物理1403',
-      phone: '18560684221',
-    }, {
-      id: 3,
-      number: 1409030118,
-      name: '王泰东',
-      college: '理学院',
-      class: '应用物理1404',
-      phone: '18560684222',
-    }, {
-      id: 4,
-      number: 1409030119,
-      name: '王泰东',
-      college: '理学院',
-      class: '应用物理1405',
-      phone: '18560684223',
-    }],
+    listData: [
+      {
+        title: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
+        content: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
+        time: '2018-03-04',
+        teacherName: 'Buxingjie',
+      }, {
+        title: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
+        content: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
+        time: '2018-03-04',
+        teacherName: 'Buxingjie',
+      }, {
+        title: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
+        content: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
+        time: '2018-03-04',
+        teacherName: 'Buxingjie',
+      },
+    ],
+    modalVisible: false,
+    currentItem: {}, // 当前通知
     pagination: {
       showSizeChanger: true,
       showQuickJumper: true,
@@ -47,13 +37,12 @@ export default {
       total: 0,
       pageSize: 10,
       pageSizeOptions: ['10', '20', '50', '100'],
-
     },
   },
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/admin/student') {
+        if (location.pathname === 'admin/home') {
           dispatch({
             type: 'query',
             payload: {
@@ -62,7 +51,6 @@ export default {
                 rowcount: 10, // 一页展示条数 默认10
                 orderby: {},
               },
-              key: '',
             },
           });
         }
@@ -73,11 +61,12 @@ export default {
     * query({ payload }, { call, put }) {
       // yield put({ type: 'showLoading' });
       const res = yield call(inquire, payload);
-      if (res.data.status === 200) {
+      const { data, code } = res;
+      if (code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            listData: res.data.data,
+            listData: data.data,
           },
         });
       } else {

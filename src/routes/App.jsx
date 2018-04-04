@@ -11,7 +11,6 @@ import '../themes/index.less';
 import Error from './error/index';
 import { getSession, toJson, config, classnames } from '../utils';
 
-const socket = io.connect(config.SOCKET_ADDRESS);
 
 const { prefix, openPages } = config;
 
@@ -19,17 +18,43 @@ const { prefix, openPages } = config;
 const { Header, Bread, Footer, Sider, styles } = Layout;
 let lastHref;
 
-const App = ({ children, dispatch, report, loading, location }) => {
-  const { user, siderFold, darkTheme, isNavbar, menuPopoverVisible, navOpenKeys, menu, permissions } = report;
+const App = ({ children, dispatch, app, loading, location }) => {
+  const {
+    user,
+    siderFold,
+    darkTheme,
+    isNavbar,
+    menuPopoverVisible,
+    navOpenKeys,
+    permissions,
+    adminMenu,
+    teacherMenu,
+    studentMenu,
+  } = app;
   let { pathname } = location;
+  // 根据身份信息显示不同菜单
+  let menuData = [];
+  let permissionsArray = [];
+  const identity = getSession('identity');
+  if (identity === 'admin') {
+    menuData = adminMenu;
+    permissionsArray = permissions.visit.admin;
+  } else if (identity === 'teacher') {
+    menuData = teacherMenu;
+    permissionsArray = permissions.visit.teacher;
+  } else if (identity === 'student') {
+    menuData = studentMenu;
+    permissionsArray = permissions.visit.student;
+  }
+
   pathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
   const { logo } = config;
-  const current = menu.filter(item => pathToRegexp(item.route || '').exec(pathname));
+  const current = menuData.filter(item => pathToRegexp(item.route || '').exec(pathname));
   let hasPermission = false;
   if (pathname === '/') {
     hasPermission = true;
   } else {
-    hasPermission = current.length ? permissions.visit.includes(current[0].id) : false;
+    hasPermission = current.length ? permissionsArray.includes(current[0].id) : false;
   }
   const href = window.location.href;
 
@@ -42,42 +67,38 @@ const App = ({ children, dispatch, report, loading, location }) => {
     }
   }
   const headerProps = {
-    menu,
+    menu: menuData,
     user,
     siderFold,
     isNavbar,
     menuPopoverVisible,
     navOpenKeys,
     logout() {
-      const loginId = !(toJson(getSession('sessionid')) === 'expired') ? toJson(getSession('sessionid')) : null;
-      const msg = {
-        header: {
-          sessionid: loginId,
+      // 退出主系统
+      dispatch({
+        type: 'app/logOut',
+        payload: {
+          logoutMsg: '退出成功！',
         },
-        message: {
-          path: 'user/logoff',
-          args: {},
-        },
-      };
-      socket.emit('event', msg);
-      console.log(msg);
+      });
     },
+
     checkLogin() {
-      dispatch({ type: 'report/checkLogin' });
+      dispatch({ type: 'app/checkLogin' });
     },
     switchMenuPopover() {
-      dispatch({ type: 'report/switchMenuPopver' });
+      dispatch({ type: 'app/switchMenuPopver' });
     },
     switchSider() {
-      dispatch({ type: 'report/switchSider' });
+      dispatch({ type: 'app/switchSider' });
     },
     changeOpenKeys(openKeys) {
-      dispatch({ type: 'report/handleNavOpenKeys', payload: { navOpenKeys: openKeys } });
+      dispatch({ type: 'app/handleNavOpenKeys', payload: { navOpenKeys: openKeys } });
     },
   };
 
   const siderProps = {
-    menu,
+    menu: menuData,
     siderFold,
     darkTheme,
     navOpenKeys,
@@ -85,12 +106,12 @@ const App = ({ children, dispatch, report, loading, location }) => {
       dispatch({ type: 'report/switchTheme' });
     },
     changeOpenKeys(openKeys) {
-      localStorage.setItem(`${prefix}navOpenKeys`, JSON.stringify(openKeys));
+      window.localStorage.setItem(`${prefix}navOpenKeys`, JSON.stringify(openKeys));
       dispatch({ type: 'report/handleNavOpenKeys', payload: { navOpenKeys: openKeys } });
     },
   };
   const breadProps = {
-    menu, location,
+    menu: menuData, location,
   };
   if (openPages && openPages.includes(pathname)) {
     return (<div>
@@ -134,4 +155,4 @@ App.propTypes = {
   loading: PropTypes.object,
 };
 
-export default connect(({ report, loading }) => ({ report, loading }))(App);
+export default connect(({ app, loading }) => ({ app, loading }))(App);

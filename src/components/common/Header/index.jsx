@@ -8,7 +8,7 @@ import { getSession } from '../../../utils';
 const SubMenu = Menu.SubMenu;
 
 const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys, menu, dispatch }) => {
-  //let handleClickMenu = e => e.key === 'logout' && logout()
+  // let handleClickMenu = e => e.key === 'logout' && logout()
   const handleClickMenu = e =>{
     if(e.key === 'logout'){
       logout();
@@ -27,15 +27,22 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
   };
 
   // 检测登陆
-  if (!getSession('user')) {
-    window.location = `/index.html#/login`;
-  }
+  // if (!getSession('user')) {
+  //   window.location = `/index.html#/login`;
+  // }
 
 
   return (
     <div className={styles.header}>
       {isNavbar
-        ? <Popover placement="bottomLeft" onVisibleChange={switchMenuPopover} visible={menuPopoverVisible} overlayClassName={styles.popovermenu} trigger="click" content={<Menus {...menusProps} />}>
+        ? <Popover
+          placement="bottomLeft"
+          onVisibleChange={switchMenuPopover}
+          visible={menuPopoverVisible}
+          overlayClassName={styles.popovermenu}
+          trigger="click"
+          content={<Menus {...menusProps} />}
+        >
           <div className={styles.button}>
             <Icon type="bars" />
           </div>
@@ -48,9 +55,9 @@ const Header = ({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
           {/*<Icon type="mail" />*/}
         {/*</div>*/}
         <Menu mode="horizontal" onClick={handleClickMenu}>
-          <SubMenu style={{
-            float: 'right',
-          }} title={< span > <Icon type="user" />{user.username}</span>}
+          <SubMenu
+            style={{ float: 'right' }}
+            title={< span > <Icon type="user" />{user.username}</span>}
           >
             <Menu.Item disabled><Icon type="user" />个人中心</Menu.Item>
             <Menu.Item disabled><Icon type="setting" />设置</Menu.Item>

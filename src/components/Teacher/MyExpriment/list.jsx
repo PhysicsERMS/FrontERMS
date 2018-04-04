@@ -4,30 +4,24 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 
 
 const list = ({ loading, listData, pagination, onPageChange }) => {
   const columns = [{
-    title: '学号',
-    dataIndex: 'number',
+    title: '实验编号',
+    dataIndex: 'id',
   }, {
-    title: '姓名',
+    title: '实验名称',
     dataIndex: 'name',
   }, {
-    title: '学院',
-    dataIndex: 'college',
-  }, {
-    title: '班级',
-    dataIndex: 'class',
-  }, {
-    title: '联系方式',
-    dataIndex: 'phone',
+    title: '教室',
+    dataIndex: 'room',
   }, {
     title: '操作',
     dataIndex: '',
     key: 'x',
-    render: () => (<div><a href="#">编辑</a> | <a href="#">删除</a></div>),
+    render: () => (<Button type="primary" size="small">进入实验</Button>),
   }];
   return (
     <div>
@@ -38,7 +32,7 @@ const list = ({ loading, listData, pagination, onPageChange }) => {
         loading={loading}
         onChange={onPageChange}
         pagination={pagination}
-        rowKey={record => record.number}
+        rowKey={record => record.id}
       />
     </div>
   );

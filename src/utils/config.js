@@ -3,12 +3,9 @@ const APIV2 = '/api/v2';
 
 
 module.exports = {
-  name: '验数据处理系统',
+  name: 'EDPS', // Experiment Data Processing System
   prefix: 'rt-report',
   footerText: 'UPC大学物理实验数据处理系统 v1.0',
-  SOCKET_ADDRESS: 'http://rtreport.choicesaas.cn:9789',
-  // SOCKET_ADDRESS: '30.87.242.24:8081',
-  // SOCKET_ADDRESS: '30.87.245.31:8081',
   logo: './images/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',

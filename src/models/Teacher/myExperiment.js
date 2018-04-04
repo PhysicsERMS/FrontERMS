@@ -3,41 +3,24 @@
  * Author：Wangtaidong
  */
 import { message } from 'antd';
-import { inquire } from '../../services/Admin/student';
+import { inquire } from '../../services/Teacher/myExperiment';
 
 export default {
-  namespace: 'adminStudent',
+  namespace: 'teacherExperiment',
   state: {
     loading: false,
-    searchInfo: '',
-    listData: [{  // 这里只是模拟数据
-      id: 1,
-      number: 1409030116,
-      name: '王泰东',
-      college: '理学院',
-      class: '应用物理1402',
-      phone: '18560684220',
+    listData: [{
+      id: '10021',
+      name: '电学元件的伏安特性研究',
+      room: '基础D304',
     }, {
-      id: 2,
-      number: 1409030117,
-      name: '王泰东',
-      college: '理学院',
-      class: '应用物理1403',
-      phone: '18560684221',
+      id: '10022',
+      name: '模拟法测绘静电场',
+      room: '基础D308',
     }, {
-      id: 3,
-      number: 1409030118,
-      name: '王泰东',
-      college: '理学院',
-      class: '应用物理1404',
-      phone: '18560684222',
-    }, {
-      id: 4,
-      number: 1409030119,
-      name: '王泰东',
-      college: '理学院',
-      class: '应用物理1405',
-      phone: '18560684223',
+      id: '10023',
+      name: '交流电桥的使用与研究',
+      room: '基础D306',
     }],
     pagination: {
       showSizeChanger: true,
@@ -53,7 +36,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/admin/student') {
+        if (location.pathname === '/teacher/myExperiment') {
           dispatch({
             type: 'query',
             payload: {
@@ -62,7 +45,6 @@ export default {
                 rowcount: 10, // 一页展示条数 默认10
                 orderby: {},
               },
-              key: '',
             },
           });
         }
@@ -72,17 +54,17 @@ export default {
   effects: {
     * query({ payload }, { call, put }) {
       // yield put({ type: 'showLoading' });
-      const res = yield call(inquire, payload);
-      if (res.data.status === 200) {
+      const response = yield call(inquire, payload);
+      if (response.data.status === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            listData: res.data.data,
+            listData: response.data.data,
           },
         });
       } else {
         yield put({ type: 'hideLoading' });
-        message.warning(res.data.msg);
+        message.warning(response.data.msg);
       }
     },
   },

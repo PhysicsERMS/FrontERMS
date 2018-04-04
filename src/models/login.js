@@ -1,75 +1,91 @@
 import { message } from 'antd';
-import { delSession, saveSession, toStr, config } from '../utils';
-import io from '../utils/socket.io';
-
-const socket = io.connect(config.SOCKET_ADDRESS);
+import { routerRedux } from 'dva/router';
+import { saveSession } from '../utils';
+// import { adminLogin, teacherLogin, studentLogin } from '../services/login';
 
 export default {
   namespace: 'login',
   state: {
+    isLogin: false,
     loading: false,
-    name: 'jack',
+    identity: '',
   },
-  subscriptions: {
-    setup({ dispatch, history }) {
-      history.listen((location) => {
-        if (location.pathname === '/login') {
-          delSession('sessionid');
-          delSession('user');
-          delSession('groupcode');
-          // 监听基础资料
-          socket.removeAllListeners('baseinfo');
-          socket.on('baseinfo', (data) => {
-            saveSession('sessionid', toStr(data.header.sessionid));
-            message.destroy();
-            if (data.header.status === 'success') {
-              dispatch({
-                type: 'report/hideLoading',
-              });
-              dispatch({
-                type: 'report/getBaseInfo',
-                payload: data,
-              });
-            } else if (data.header.status === 'error') {
-              message.error(data.message.result, 3);
-            } else if (data.header.status === 'unlogin') {
-              message.warning('请重新登陆！', 3);
-            }
-          });
+  subscriptions: {},
+  effects: {
+    * adminLogin({ payload }, { put }) {
+      saveSession('isLogin', 'yes');
+      saveSession('identity', payload.identity);
 
-          socket.removeAllListeners('queryAllOrgInfos');
-          socket.on('queryAllOrgInfos', (data) => {
-            saveSession('sessionid', toStr(data.header.sessionid));
-            message.destroy();
-            if (data.header.status === 'success') {
-              dispatch({
-                type: 'report/hideLoading',
-              });
-              dispatch({
-                type: 'report/getBrandTree',
-                payload: data,
-              });
-            } else if (data.header.status === 'error') {
-              message.error(data.message.result, 3);
-            } else if (data.header.status === 'unlogin') {
-              message.warning('请重新登陆！', 3);
-            }
-          });
-        }
-      });
+      yield put(routerRedux.push('/admin/home'));
+      message.success('登陆成功');
+      // const res = yield call(adminLogin, payload);
+      // const { data, code } = res;
+      // if (code === 200) {
+      //   yield put({
+      //     type: 'app/updateState',
+      //     payload: {
+      //       user: {
+      //         username: data.userName || '',
+      //       },
+      //     },
+      //   });
+      // } else {
+      //   message.warning(res.data.msg);
+      // }
+    },
+    * teacherLogin({ payload }, { put }) {
+      saveSession('isLogin', 'yes');
+      saveSession('identity', payload.identity);
+      yield put(routerRedux.push('/teacher/myExperiment'));
+      message.success('登陆成功');
+      // const res = yield call(teacherLogin, payload);
+      // const { data, code } = res;
+      // if (code === 200) {
+      //   yield put({
+      //     type: 'app/updateState',
+      //     payload: {
+      //       user: {
+      //         username: data.userName || '',
+      //       },
+      //     },
+      //   });
+      // } else {
+      //   message.warning(res.data.msg);
+      // }
+    },
+    * studentLogin({ payload }, { put }) {
+      saveSession('isLogin', 'yes');
+      saveSession('identity', payload.identity);
+      yield put(routerRedux.push('/student/home'));
+      message.success('登陆成功');
+      // const res = yield call(studentLogin, payload);
+      // const { data, code } = res;
+      // if (code === 200) {
+      //   yield put({
+      //     type: 'app/updateState',
+      //     payload: {
+      //       user: {
+      //         username: data.userName || '',
+      //       },
+      //     },
+      //   });
+      // } else {
+      //   message.warning(res.data.msg);
+      // }
     },
   },
-  effects: {
-  },
   reducers: {
+    updateState(state, { payload }) {
+      return { ...state, ...payload };
+    },
     showLoading(state) {
       return { ...state, loading: true };
     },
     hideLoading(state) {
       return { ...state, loading: false };
     },
-    querySuccess(state, action) {
-      return { ...state, ...action.payload, loading: false };
+    querySuccess(state, { payload }) {
+      return { ...state, ...payload, loading: false };
     },
   },
 };

@@ -127,6 +127,6 @@ Menus.propTypes = {
   handleClickNavMenu: PropTypes.func,
   navOpenKeys: PropTypes.array,
   changeOpenKeys: PropTypes.func,
-}
+};
 
-export default Menus
+export default Menus;

@@ -65,7 +65,6 @@ function Dashboard({location, dashboard}) {
 Dashboard.propTypes = {
   dashboard: PropTypes.object,
   location: PropTypes.object,
-  dispatch: PropTypes.func,
 };
 
 function mapStateToProps(dashboard) {

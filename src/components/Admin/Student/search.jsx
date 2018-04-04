@@ -19,7 +19,7 @@ const search = ({
                       <Input
                         value={searchInfo}
                         placeholder="学号、姓名查询 "
-                        OnChange={onChange}
+                        onChange={onChange}
                         style={{ width: 190, marginRight: 10 }}
                       />
                       <Button type="primary" onClick={onSearch}>搜索</Button>
