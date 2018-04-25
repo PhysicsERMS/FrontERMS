@@ -1,9 +1,7 @@
 import { message } from 'antd';
-import { routerRedux } from 'dva/router';
-import io from '../utils/socket.io';
-import { getSession, toJson, config, saveSession, toStr } from '../utils/index';
 
-const socket = io.connect(config.SOCKET_ADDRESS);
+import { getSession, toJson } from '../utils/index';
+
 
 message.config({
   top: 300,
@@ -76,37 +74,7 @@ export default {
             },
           };
           dispatch({ type: 'showLoading' });
-          socket.emit('event', msgBar);
           console.log(msgBar);
-          socket.removeAllListeners('queryHomePageChart');
-          socket.on('queryHomePageChart', (data) => {
-            console.error(data);
-            saveSession('sessionid', toStr(data.header.sessionid));
-            message.destroy();
-            if (data.header.status === 'success' && data.message.info.length > 0) {
-              dispatch({
-                type: 'querySuccess',
-                payload: {
-                  summaryFirst: data.message.info[0].summaryFirst,
-                  summarySecond: data.message.info[0].summarySecond,
-                  summaryThird: data.message.info[0].summaryThird,
-                  summaryFourth: data.message.info[0].summaryFourth,
-                  summaryFifth: data.message.info[0].summaryFifth,
-                  amount: data.message.info[0].amount,
-                  order: data.message.info[0].order,
-                  custom: data.message.info[0].custom,
-                },
-              });
-            } else if (data.header.status === 'error') {
-              dispatch({
-                type: 'hideLoading',
-              });
-              message.error(data.message.result, 3);
-            } else if (data.header.status === 'unlogin') {
-              message.warning('请重新登陆！', 3);
-              dispatch(routerRedux.push('/login'));
-            }
-          });
         }
       });
     },

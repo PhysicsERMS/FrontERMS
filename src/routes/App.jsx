@@ -5,7 +5,6 @@ import { connect } from 'dva';
 import { Card } from 'antd';
 import NProgress from 'nprogress';
 import { Helmet } from 'react-helmet';
-import io from '../utils/socket.io';
 import { Layout, Loader } from '../components';
 import '../themes/index.less';
 import Error from './error/index';

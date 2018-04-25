@@ -42,7 +42,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === 'admin/home') {
+        if (location.pathname === '/admin/home') {
           dispatch({
             type: 'query',
             payload: {
@@ -59,7 +59,7 @@ export default {
   },
   effects: {
     * query({ payload }, { call, put }) {
-      // yield put({ type: 'showLoading' });
+      yield put({ type: 'showLoading' });
       const res = yield call(inquire, payload);
       const { data, code } = res;
       if (code === 200) {

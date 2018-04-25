@@ -7,12 +7,17 @@ import Login from './Login';
 import AHome from './Admin/Home';
 import AStudent from './Admin/Student';
 import TMyExperiment from './Teacher/MyExperiment';
+import SHome from './Student/Home';
+import SMyExperiment from './Student/MyExperiment';
 
 const routes = [
+  // 公共部分
   {
     path: '/login',
     component: Login,
-  }, {
+  }, 
+  // 管理员部分
+  {
     path: '/admin/home',
     component: AHome,
   },
@@ -20,10 +25,20 @@ const routes = [
     path: '/admin/student',
     component: AStudent,
   },
+  // 教师部分
   {
     path: '/teacher/myExperiment',
     component: TMyExperiment,
   },
+  // 学生部分
+  {
+    path: '/student/home',
+    component: SHome,
+  },
+  {
+    path: '/student/myExperiment',
+    component: SMyExperiment,
+  }
 ];
 
 const Router = ({ history, app }) => {

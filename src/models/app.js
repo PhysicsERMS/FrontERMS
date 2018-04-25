@@ -19,7 +19,7 @@ export default {
       visit: {
         admin: ['1', '2'],
         teacher: ['1'],
-        student: [],
+        student: ['1', '2'],
       },
     },
     adminMenu: [
@@ -45,7 +45,18 @@ export default {
       },
     ],
     studentMenu: [
-
+      {
+        id: '1',
+        icon: 'laptop',
+        name: '首页',
+        route: '/student/home',
+      },
+      {
+        id: '2',
+        icon: 'book',
+        name: '我的实验',
+        route: '/student/myExperiment',
+      },
     ],
     menuPopoverVisible: false,
     siderFold: localStorage.getItem(`${prefix}siderFold`) === 'true',

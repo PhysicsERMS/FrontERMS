@@ -3,7 +3,6 @@ import { connect } from 'dva';
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
 import LoginPage from '../components/Login/page';
-import io from '../utils/socket.io';
 import { getSession, toJson, saveSession, toStr, config, queryURL } from '../utils/index';
 
 

@@ -9,13 +9,16 @@ import { Input, Button, Row, Col } from 'antd';
 
 const search = ({
       searchInfo,
-      // onSelect,
+      onGetStudents,
       onChange,
       onSearch,
               }) => (
                 <div>
                   <Row>
-                    <Col span={8} offset={16}>
+                  <Col span={8}>
+                      <Button type="primary" onClick={onGetStudents}>获取学生</Button>
+                    </Col>
+                    <Col span={8} offset={8}>
                       <Input
                         value={searchInfo}
                         placeholder="学号、姓名查询 "

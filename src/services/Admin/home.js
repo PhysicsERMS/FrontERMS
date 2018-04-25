@@ -4,9 +4,8 @@
  */
 import request from '../../utils/request';
 
-export default async function query(params) {
-  return request('/api/org/getAll', {
+export default async function inquire() {
+  return request('/mock/11/physicsEDPS/getNotices', {
     method: 'post',
-    body: params,
   });
 }

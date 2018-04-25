@@ -24,10 +24,9 @@
     }
   },
   "proxy": {
-    "/socket.io": {
-      "target": "http://30.87.242.27:9092",
-      "changeOrigin": true,
-      "pathRewrite": { "^/api" : "" }
+    "/mock/11/": {
+      "target": "http://127.0.0.1:3000",
+      "changeOrigin": true
     }
   }
 }

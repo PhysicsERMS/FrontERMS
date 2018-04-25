@@ -19,6 +19,8 @@ app.model(require('../models/dashboard'));
 app.model(require('../models/Admin/home'));
 app.model(require('../models/Admin/student'));
 app.model(require('../models/Teacher/myExperiment'));
+app.model(require('../models/Student/home'));
+app.model(require('../models/Student/myExperiment'));
 
 // 4. Router
 app.router(require('../routes'));

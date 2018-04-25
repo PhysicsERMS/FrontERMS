@@ -85,6 +85,10 @@ export default {
         message.warning(res.data.msg);
       }
     },
+
+    * getStudents({ put }) {
+      yield put({ type: 'showLoading' });
+    },
   },
   reducers: {
     updateState(state, { payload }) {

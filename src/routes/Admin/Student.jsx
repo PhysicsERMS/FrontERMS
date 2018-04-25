@@ -13,6 +13,11 @@ const Student = ({ dispatch, state }) => {
 
   const searchProps = {
     searchInfo,
+    onGetStudents() {
+      dispatch({
+        type: 'adminStudent/getStudents',
+      });
+    },
     onChange(value) {
       dispatch({
         type: 'adminStudent/updateState',
