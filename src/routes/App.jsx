@@ -8,7 +8,7 @@ import { Helmet } from 'react-helmet';
 import { Layout, Loader } from '../components';
 import '../themes/index.less';
 import Error from './error/index';
-import { getSession, toJson, config, classnames } from '../utils';
+import { getSession, config, classnames } from '../utils';
 
 
 const { prefix, openPages } = config;
@@ -125,7 +125,10 @@ const App = ({ children, dispatch, app, loading, location }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href={logo} type="image/x-icon" />
       </Helmet>
-      <div className={classnames(styles.layout, { [styles.fold]: isNavbar ? false : siderFold }, { [styles.withnavbar]: isNavbar })}>
+      <div
+        className={classnames(styles.layout, { [styles.fold]: isNavbar ? false : siderFold },
+        { [styles.withnavbar]: isNavbar })}
+      >
         {!isNavbar ? <aside className={classnames(styles.sider, { [styles.light]: !darkTheme })}>
           <Sider {...siderProps} />
         </aside> : ''}
