@@ -38,7 +38,7 @@ export default {
       score: '98',
       preStatus: 1,
       preScore: '',
-      viewUrl: 'file:///F:/GraduationProject/文献/大学物理实验报告自动批阅系统的设计与实现.pdf',
+      viewUrl: 'https://github.com/Maiduo007',
     }],
     pagination: {
       showSizeChanger: true,
@@ -48,8 +48,11 @@ export default {
       total: 0,
       pageSize: 10,
       pageSizeOptions: ['10', '20', '50', '100'],
-
     },
+    file: [],
+    fileUrl: '',
+    subModalVisible: false,
+    viewModalVisible: false,
   },
   subscriptions: {
     setup({ dispatch, history }) {
@@ -94,11 +97,11 @@ export default {
       return { ...state, ...payload, loading: false };
     },
     showModal(state, { payload }) {
-      return { ...state, ...payload, modalVisible: true };
+      return { ...state, ...payload };
     },
 
-    hideModal(state) {
-      return { ...state, modalVisible: false };
+    hideModal(state, { payload }) {
+      return { ...state, ...payload };
     },
     showLoading(state) {
       return { ...state, loading: true };
