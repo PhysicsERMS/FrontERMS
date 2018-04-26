@@ -1,5 +1,5 @@
 /**
- * Date：2018/4/2
+ * Date：2018/4/26
  * Author：Wangtaidong
  */
 import React from 'react';
@@ -16,12 +16,12 @@ const search = ({
                 <div>
                   <Row>
                     <Col span={8}>
-                      <Button type="primary" onClick={onGetStudents}>获取学生</Button>
+                      <Button type="primary" onClick={onGetStudents}>获取实验</Button>
                     </Col>
                     <Col span={8} offset={8}>
                       <Input
                         value={searchInfo}
-                        placeholder="学号、姓名查询 "
+                        placeholder="实验编号、实验名称查询"
                         onChange={onChange}
                         style={{ width: 190, marginRight: 10 }}
                       />

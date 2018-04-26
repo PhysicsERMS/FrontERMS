@@ -1,8 +1,8 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
-import { saveSession } from '../utils';
-// import { adminLogin, teacherLogin, studentLogin } from '../services/login';
-
+import { saveSession, delSession } from '../utils';
+import { quitSystem } from '../services/login';
+// adminLogin, teacherLogin, studentLogin,
 export default {
   namespace: 'login',
   state: {
@@ -36,7 +36,7 @@ export default {
     * teacherLogin({ payload }, { put }) {
       saveSession('isLogin', 'yes');
       saveSession('identity', payload.identity);
-      yield put(routerRedux.push('/teacher/myExperiment'));
+      yield put(routerRedux.push('/teacher/home'));
       message.success('登陆成功');
       // const res = yield call(teacherLogin, payload);
       // const { data, code } = res;
@@ -72,6 +72,19 @@ export default {
       // } else {
       //   message.warning(res.data.msg);
       // }
+    },
+    * logoutSystem({ payload }, { call }) {
+      window.location = `${window.location.origin}/index.html#/login`;
+      delSession('isLogin');
+      delSession('identity');
+      const res = yield call(quitSystem);
+      const { code } = res.data;
+      if (code === '200') {
+        message.success('退出成功！');
+        // 删除相关缓存
+        delSession('isLogin');
+        delSession('identity');
+      }
     },
   },
   reducers: {

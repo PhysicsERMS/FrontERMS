@@ -1,44 +1,30 @@
 /**
- * Date：2018/4/24
+ * Date：2018/4/26
  * Author：Wangtaidong
  */
 import { message } from 'antd';
-import { inquire } from '../../services/Student/myExperiment';
+import { inquire } from '../../services/Admin/experiment';
 
 export default {
-  namespace: 'studentExperiment',
+  namespace: 'adminExperiment',
   state: {
     loading: false,
-    listData: [{
+    searchInfo: '',
+    listData: [{  // 这里只是模拟数据
+      id: '10023',
+      name: '交流电桥的使用与研究',
+      teacherName: '步行街',
+      classRoom: '基础D306',
+    }, {
       id: '10021',
       name: '电学元件的伏安特性研究',
       classRoom: '基础D304',
-      classTime: '05030708',
-      status: 0,
-      score: '',
-      preStatus: 0,
-      preScore: '',
-      viewUrl: '',
+      teacherName: '步行街',
     }, {
       id: '10022',
       name: '模拟法测绘静电场',
       classRoom: '基础D308',
-      classTime: '05030708',
-      status: 1,
-      score: '',
-      preStatus: 1,
-      preScore: '',
-      viewUrl: '',
-    }, {
-      id: '10023',
-      name: '交流电桥的使用与研究',
-      classRoom: '基础D306',
-      classTime: '05030708',
-      status: 2,
-      score: '98',
-      preStatus: 1,
-      preScore: '',
-      viewUrl: 'https://github.com/Maiduo007',
+      teacherName: '步行街',
     }],
     pagination: {
       showSizeChanger: true,
@@ -48,16 +34,13 @@ export default {
       total: 0,
       pageSize: 10,
       pageSizeOptions: ['10', '20', '50', '100'],
+
     },
-    file: [],
-    fileUrl: '',
-    subModalVisible: false,
-    viewModalVisible: false,
   },
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/student/myExperiment') {
+        if (location.pathname === '/admin/student') {
           dispatch({
             type: 'query',
             payload: {
@@ -66,6 +49,7 @@ export default {
                 rowcount: 10, // 一页展示条数 默认10
                 orderby: {},
               },
+              key: '',
             },
           });
         }
@@ -75,18 +59,22 @@ export default {
   effects: {
     * query({ payload }, { call, put }) {
       // yield put({ type: 'showLoading' });
-      const response = yield call(inquire, payload);
-      if (response.data.status === 200) {
+      const res = yield call(inquire, payload);
+      if (res.data.status === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            listData: response.data.data,
+            listData: res.data.data,
           },
         });
       } else {
         yield put({ type: 'hideLoading' });
-        message.warning(response.data.msg);
+        message.warning(res.data.msg);
       }
+    },
+
+    * getStudents({ put }) {
+      yield put({ type: 'showLoading' });
     },
   },
   reducers: {
@@ -97,11 +85,11 @@ export default {
       return { ...state, ...payload, loading: false };
     },
     showModal(state, { payload }) {
-      return { ...state, ...payload };
+      return { ...state, ...payload, modalVisible: true };
     },
 
-    hideModal(state, { payload }) {
-      return { ...state, ...payload };
+    hideModal(state) {
+      return { ...state, modalVisible: false };
     },
     showLoading(state) {
       return { ...state, loading: true };

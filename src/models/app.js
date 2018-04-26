@@ -1,5 +1,4 @@
-import { message } from 'antd';
-import { logout, menuList, hasPower, queryAuthority } from '../services/app';
+import { menuList, hasPower, queryAuthority } from '../services/app';
 import { makeMenu, getUserInfo, getSession, config } from '../utils/';
 
 const { prefix } = config;
@@ -17,8 +16,8 @@ export default {
     isLogin: false,
     permissions: {
       visit: {
-        admin: ['1', '2'],
-        teacher: ['1'],
+        admin: ['1', '2', '3'],
+        teacher: ['1', '2'],
         student: ['1', '2'],
       },
     },
@@ -31,6 +30,12 @@ export default {
       },
       {
         id: '2',
+        icon: 'bulb',
+        name: '实验管理',
+        route: '/admin/experiment',
+      },
+      {
+        id: '3',
         icon: 'code-o',
         name: '学生管理',
         route: '/admin/student',
@@ -39,6 +44,12 @@ export default {
     teacherMenu: [
       {
         id: '1',
+        icon: 'laptop',
+        name: '首页',
+        route: '/teacher/home',
+      },
+      {
+        id: '2',
         icon: 'book',
         name: '我的实验',
         route: '/teacher/myExperiment',
@@ -85,11 +96,10 @@ export default {
     },
 
     // 登陆检测
-    * checkLogin(payload, { put }) {
-      const user = getSession('user');
-      if (!user) {
+    * checkLogin() {
+      const isLogin = yield getSession('isLogin');
+      if (!isLogin || isLogin !== 'yes') {
         window.location = `${location.origin}/index.html#/login`;
-        yield put({ type: 'updateState', payload: { isLogin: false } });
       }
     },
 
@@ -132,15 +142,6 @@ export default {
           type: 'showItem',
           hasItemPower: (data.data === 1),
         });
-      }
-    },
-    * logOut(payload, { put, call }) {
-      window.location = `${location.origin}/index.html#/login`;
-      const { data } = yield call(logout);
-      if (data.success) {
-        yield put({ type: 'logoutAct' });
-      } else {
-        message.error('退出失败！');
       }
     },
   },

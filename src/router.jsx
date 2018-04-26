@@ -1,28 +1,23 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'dva';
 import { Router } from 'dva/router';
-import { routerRedux } from 'dva/router';
+import { LocaleProvider } from 'antd';
+import zhCN from 'antd/lib/locale-provider/zh_CN';
 import App from './routes/App';
 
-function RouterConfig({ history, app, routes, dispatch }) {
+function RouterConfig({ history, routes, dispatch }) {
   const router = [
     {
       path: '/',
       name: 'app',
       component: App,
+      indexRoute: { onEnter: (nextState, replace) => replace('/login') },
       onEnter(nextState) {
-        app._store.dispatch({
-          type: 'report/checkLogin',
-        });
-
         const { pathname } = nextState.location;
-
-        if (pathname !== '/merchants/register' && pathname !== '/merchants/forgetPassword') {
-          app._store.dispatch({
-            type: 'merchantApp/queryAuthority',
-          });
-
-          app._store.dispatch({
-            type: 'merchantApp/getPower',
+        if (pathname !== '/login') {
+          dispatch({
+            type: 'app/checkLogin',
           });
         }
       },
@@ -30,8 +25,15 @@ function RouterConfig({ history, app, routes, dispatch }) {
     },
   ];
   return (
-    <Router history={history} routes={router} />
+    <LocaleProvider locale={zhCN}>
+      <Router history={history} routes={router} />
+    </LocaleProvider>
   );
 }
+RouterConfig.propTypes = {
+  history: PropTypes.object,
+  routes: PropTypes.array,
+  dispatch: PropTypes.func,
+};
 
-export default RouterConfig;
+export default connect()(RouterConfig);

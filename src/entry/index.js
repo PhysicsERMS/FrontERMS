@@ -15,9 +15,11 @@ app.use(createLoading());
 // 3. Model
 app.model(require('../models/app'));
 app.model(require('../models/login'));
-app.model(require('../models/dashboard'));
+// app.model(require('../models/dashboard'));
 app.model(require('../models/Admin/home'));
+app.model(require('../models/Admin/experiment'));
 app.model(require('../models/Admin/student'));
+app.model(require('../models/Teacher/home'));
 app.model(require('../models/Teacher/myExperiment'));
 app.model(require('../models/Student/home'));
 app.model(require('../models/Student/myExperiment'));

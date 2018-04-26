@@ -16,7 +16,7 @@ const list = ({ loading, listData, pagination, onPageChange, onSubmit, onView })
     dataIndex: 'name',
   }, {
     title: '教室',
-    dataIndex: 'room',
+    dataIndex: 'classRoom',
   }, {
     title: '上课时间',
     dataIndex: 'classTime',

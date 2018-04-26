@@ -75,7 +75,7 @@ const App = ({ children, dispatch, app, loading, location }) => {
     logout() {
       // 退出主系统
       dispatch({
-        type: 'app/logOut',
+        type: 'login/logoutSystem',
         payload: {
           logoutMsg: '退出成功！',
         },
