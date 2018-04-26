@@ -12,11 +12,15 @@ export default {
   namespace: 'app',
   state: {
     identity: '',
-    user: {},
+    user: {
+      name: 'admin',
+      email: 'iamdbd@163.com',
+      phone: '18560684220',
+    },
     isLogin: false,
     permissions: {
       visit: {
-        admin: ['1', '2', '3'],
+        admin: ['1', '2', '3', '4', '5'],
         teacher: ['1', '2'],
         student: ['1', '2'],
       },
@@ -36,9 +40,21 @@ export default {
       },
       {
         id: '3',
-        icon: 'code-o',
+        icon: 'user',
+        name: '教师管理',
+        route: '/admin/teacher',
+      },
+      {
+        id: '4',
+        icon: 'team',
         name: '学生管理',
         route: '/admin/student',
+      },
+      {
+        id: '5',
+        icon: 'fork',
+        name: '个人信息',
+        route: '/admin/personal',
       },
     ],
     teacherMenu: [

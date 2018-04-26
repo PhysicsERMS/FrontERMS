@@ -3,28 +3,33 @@
  * Author：Wangtaidong
  */
 import { message } from 'antd';
-import { inquire } from '../../services/Admin/experiment';
+import { inquire } from '../../services/Admin/teacher';
 
 export default {
-  namespace: 'adminExperiment',
+  namespace: 'adminTeacher',
   state: {
     loading: false,
     searchInfo: '',
     listData: [{  // 这里只是模拟数据
-      id: '10023',
-      name: '交流电桥的使用与研究',
-      teacherName: '步行街',
-      classRoom: '基础D306',
+      id: 1,
+      name: '步行街1',
+      phone: '18560684220',
+      office: '基础D311',
     }, {
-      id: '10021',
-      name: '电学元件的伏安特性研究',
-      classRoom: '基础D304',
-      teacherName: '步行街',
+      id: 2,
+      name: '步行街2',
+      phone: '18560684221',
+      office: '基础D311',
     }, {
-      id: '10022',
-      name: '模拟法测绘静电场',
-      classRoom: '基础D308',
-      teacherName: '步行街',
+      id: 3,
+      name: '步行街3',
+      phone: '18560684222',
+      office: '基础D311',
+    }, {
+      id: 4,
+      name: '步行街4',
+      phone: '18560684223',
+      office: '基础D311',
     }],
     pagination: {
       showSizeChanger: true,
@@ -40,7 +45,7 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/admin/experiment') {
+        if (location.pathname === '/admin/teacher') {
           dispatch({
             type: 'query',
             payload: {

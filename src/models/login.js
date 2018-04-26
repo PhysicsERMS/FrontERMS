@@ -42,7 +42,7 @@ export default {
       // const { data, code } = res;
       // if (code === 200) {
       //   yield put({
-      //     type: 'app/updateState',
+      //     type: 'app/updateState', // 登陆成功返回完整user信息，并且更新保存在app中
       //     payload: {
       //       user: {
       //         username: data.userName || '',
