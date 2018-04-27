@@ -9,6 +9,8 @@
 # webstorm project file
 /.idea
 
+/.vscode
+
 # misc
 .DS_Store
 npm-debug.log*
