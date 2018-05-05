@@ -3,28 +3,13 @@
  * Author：Wangtaidong
  */
 import { message } from 'antd';
-import { routerRedux } from 'dva/router';
-import { inquire } from '../../services/Teacher/myExperiment';
+import pathToRegexp from 'path-to-regexp';
+import { detail } from '../../services/Teacher/detail';
 
 export default {
-  namespace: 'teacherExperiment',
+  namespace: 'teacherDetail',
   state: {
     loading: false,
-    // listData: [
-    //   {
-    //     id: '10021',
-    //     name: '电学元件的伏安特性研究',
-    //     room: '基础D304',
-    //   }, {
-    //     id: '10022',
-    //     name: '模拟法测绘静电场',
-    //     room: '基础D308',
-    //   }, {
-    //     id: '10023',
-    //     name: '交流电桥的使用与研究',
-    //     room: '基础D306',
-    //   }
-    // ],
     listData: [],
     pagination: {
       showSizeChanger: true,
@@ -40,10 +25,16 @@ export default {
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
-        if (location.pathname === '/teacher/myExperiment') {
+        const pathname = location.pathname;
+
+        const re = pathToRegexp('/teacher/experiment/:itemTd'); // 有冒号
+        const match = re.exec(pathname);
+        if (match) {
+          const itemId = match[1];
           dispatch({
             type: 'query',
             payload: {
+              id: itemId,
               page: {
                 current: 1, // 查看第几页内容 默认1
                 pageSize: 10, // 一页展示条数 默认10
@@ -57,12 +48,11 @@ export default {
   },
   effects: {
     * query({ payload }, { call, put, select }) {
-      payload.id = 7;
       yield put({ type: 'showLoading' });
-      const res = yield call(inquire, payload);
+      const res = yield call(detail, payload);
       const { code, data, page } = res.data;
       if (code === 200) {
-        const paginationOld = yield select(state => state.teacherExperiment.pagination);
+        const paginationOld = yield select(state => state.teacherDetail.pagination);
         yield put({
           type: 'querySuccess',
           payload: {
@@ -79,10 +69,6 @@ export default {
         yield put({ type: 'hideLoading' });
         message.warning(res.data.msg);
       }
-    },
-    * detail({ payload }, { put }) {
-      const path = `/teacher/experiment/${payload.itemId}`; // 无冒号
-      yield put(routerRedux.push(path));
     },
   },
   reducers: {

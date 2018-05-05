@@ -10,7 +10,7 @@ import { Table } from 'antd';
 const list = ({ loading, listData, pagination, onPageChange }) => {
   const columns = [{
     title: '学号',
-    dataIndex: 'number',
+    dataIndex: 'num',
   }, {
     title: '姓名',
     dataIndex: 'name',
@@ -38,7 +38,7 @@ const list = ({ loading, listData, pagination, onPageChange }) => {
         loading={loading}
         onChange={onPageChange}
         pagination={pagination}
-        rowKey={record => record.number}
+        rowKey={record => record.num}
       />
     </div>
   );

@@ -23,6 +23,7 @@ app.model(require('../models/Admin/student'));
 app.model(require('../models/Admin/personal'));
 app.model(require('../models/Teacher/home'));
 app.model(require('../models/Teacher/myExperiment'));
+app.model(require('../models/Teacher/detail'));
 app.model(require('../models/Student/home'));
 app.model(require('../models/Student/myExperiment'));
 

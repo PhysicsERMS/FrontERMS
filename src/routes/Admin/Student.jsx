@@ -10,7 +10,6 @@ import Search from '../../components/Admin/Student/search';
 
 const Student = ({ dispatch, state }) => {
   const { loading, searchInfo, listData, pagination } = state.adminStudent;
-
   const searchProps = {
     searchInfo,
     onGetStudents() {
@@ -50,14 +49,13 @@ const Student = ({ dispatch, state }) => {
         type: 'adminStudent/query',
         payload: {
           page: {
-            pageno: page.current, // 查看第几页内容 默认1
-            rowcount: page.pageSize, // 一页展示条数 默认10
+            current: page.current, // 查看第几页内容 默认1
+            pageSize: page.pageSize, // 一页展示条数 默认10
           },
           key: searchInfo,
         },
       });
     },
-
   };
   return (
     <div>

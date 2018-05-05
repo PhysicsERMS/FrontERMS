@@ -4,17 +4,17 @@
  */
 import request from '../../utils/request';
 
-export async function query(params) { // 查询所有机构列表
-  return request('/api/org/getAll', {
+export async function inquire(params) {
+  return request('/student/myExperiments', {
     method: 'post',
-    body: params,
+    body: JSON.stringify(params),
   });
 }
 
-export async function detail(params) { // 编辑门店信息
-  return request('/api/org/getStoreData', {
+export async function saveUrl(params) {
+  return request('/public/upload/save', {
     method: 'post',
-    body: params,
+    body: JSON.stringify(params),
   });
 }
 

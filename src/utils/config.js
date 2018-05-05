@@ -5,7 +5,7 @@ const APIV2 = '/api/v2';
 module.exports = {
   name: 'EDPS', // Experiment Data Processing System
   prefix: 'rt-report',
-  footerText: 'UPC大学物理实验数据处理系统 v1.0',
+  footerText: 'UPC大学物理实验报告管理系统 v1.0',
   logo: './images/logo.png',
   iconFontCSS: '/iconfont.css',
   iconFontJS: '/iconfont.js',

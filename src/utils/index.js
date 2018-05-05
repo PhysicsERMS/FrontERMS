@@ -296,6 +296,18 @@ const cutStr = (str, len) => {
   }
   return `${str.substr(0, len)}......`;
 };
+
+const getFormData = (params) => {
+  const formData = new window.FormData();
+  Object.entries(params).map((item) => {
+    if (item[1]) {
+      formData.append(item[0], (typeof item[1] === 'object') ? JSON.stringify(item[1]) : item[1]);
+    }
+    return false;
+  });
+  return formData;
+};
+
 module.exports = {
   config,
   request,
@@ -326,4 +338,5 @@ module.exports = {
   getSession,
   delSession,
   cutStr,
+  getFormData,
 };

@@ -4,10 +4,10 @@
  */
 import request from '../../utils/request';
 
-export async function query(params) { // 查询所有机构列表
-  return request('/api/org/getAll', {
+export async function inquire(params) { // 查询所有机构列表
+  return request('/admin/getTeachers', {
     method: 'post',
-    body: params,
+    body: JSON.stringify(params),
   });
 }
 

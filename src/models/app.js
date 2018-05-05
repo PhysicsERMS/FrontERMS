@@ -21,7 +21,7 @@ export default {
     permissions: {
       visit: {
         admin: ['1', '2', '3', '4', '5'],
-        teacher: ['1', '2'],
+        teacher: ['1', '2', '3'],
         student: ['1', '2'],
       },
     },
@@ -69,6 +69,13 @@ export default {
         icon: 'book',
         name: '我的实验',
         route: '/teacher/myExperiment',
+      },
+      {
+        id: '3',
+        mpid: '-1',
+        icon: 'book',
+        name: '实验详情',
+        route: '/teacher/experiment/:itemId',
       },
     ],
     studentMenu: [

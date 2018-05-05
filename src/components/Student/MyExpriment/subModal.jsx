@@ -30,8 +30,8 @@ const modal = ({
   const uploadProps = {
     name: 'file',
     accept: 'application/pdf',
-    multiple: false,
-    action: '//jsonplaceholder.typicode.com/posts/',
+    multiple: true,
+    action: '/public/upload',
     beforeUpload,
     onChange,
   };

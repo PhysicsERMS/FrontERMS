@@ -1,20 +1,13 @@
 /**
- * Date：2018/4/2
+ * Date：2018/5/5
  * Author：Wangtaidong
  */
 import request from '../../utils/request';
 
-export async function inquire(params) {
-  return request('/admin/getStudents', {
+export async function detail(params) {
+  return request('/teacher/getStudentsByEId', {
     method: 'post',
     body: JSON.stringify(params),
-  });
-}
-
-export async function detail(params) { // 编辑门店信息
-  return request('/api/org/getStoreData', {
-    method: 'post',
-    body: params,
   });
 }
 

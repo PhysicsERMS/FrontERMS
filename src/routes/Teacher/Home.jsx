@@ -16,7 +16,6 @@ const Home = ({ dispatch, state }) => {
     pagination,
     onView(e, param) {
       e.preventDefault();
-      console.warn(param)
       dispatch({
         type: 'teacherHome/showModal',
       });

@@ -19,17 +19,23 @@ const Experiment = ({ dispatch, state }) => {
     subModalVisible,
     viewModalVisible,
     fileUrl,
+    page,
+    pages,
+    fileId,
+    temUrl,
   } = state.studentExperiment;
-
+  console.log(fileId)
   const listProps = {
     loading,
     listData,
     pagination,
-    onSubmit() {
+    onSubmit(params) {
       dispatch({
         type: 'studentExperiment/showModal',
         payload: {
           subModalVisible: true,
+          fileId: params.id,
+          temUrl: params.viewUrl,
         },
       });
     },
@@ -71,6 +77,23 @@ const Experiment = ({ dispatch, state }) => {
           subModalVisible: false,
         },
       });
+      dispatch({
+        type: 'studentExperiment/saveUrl',
+        payload: {
+          id: fileId,
+          filePath: temUrl,
+        },
+      });
+      dispatch({
+        type: 'studentExperiment/query',
+        payload: {
+          page: {
+            pageno: pagination.current,
+            rowcount: pagination.pageSize,
+            orderby: {},
+          },
+        },
+      });
     },
     onCancel() {
       dispatch({
@@ -81,7 +104,6 @@ const Experiment = ({ dispatch, state }) => {
       });
     },
     beforeUpload(file) {
-      console.log(file);
       return new Promise((resolve, reject) => {
         if (!/.*?\.(pdf)$/g.test(file.name)) {
           message.warning(`${file.name} 不是PDF格式.`);
@@ -91,11 +113,19 @@ const Experiment = ({ dispatch, state }) => {
       });
     },
     onChange(info) {
+      console.log(info)
       const status = info.file.status;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
+      // if (status !== 'uploading') {
+      //   console.log(info.file, info.fileList);
+      // }
       if (status === 'done') {
+        const res = info.file.response;
+        dispatch({
+          type: 'studentExperiment/updateState',
+          payload: {
+            temUrl: res.filePath,
+          },
+        });
         message.success(`${info.file.name} 实验报告上传成功.`);
       } else if (status === 'error') {
         message.warning(`${info.file.name} 实验报告上传失败.`);
@@ -108,6 +138,8 @@ const Experiment = ({ dispatch, state }) => {
     viewModalVisible,
     okText: '确定',
     cancelText: '取消',
+    page,
+    pages,
     onConfirm() {
       dispatch({
         type: 'studentExperiment/hideModal',
@@ -124,26 +156,29 @@ const Experiment = ({ dispatch, state }) => {
         },
       });
     },
-    beforeUpload(file) {
-      console.log(file);
-      return new Promise((resolve, reject) => {
-        if (!/.*?\.(pdf)$/g.test(file.name)) {
-          message.warning(`${file.name} 不是PDF格式.`);
-          reject();
-        }
-        resolve();
+    onDocumentComplete(pages) {
+      dispatch({
+        type: 'studentExperiment/updateState',
+        payload: { page: 1, pages },
       });
     },
-    onChange(info) {
-      const status = info.file.status;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        message.success(`${info.file.name} 实验报告上传成功.`);
-      } else if (status === 'error') {
-        message.warning(`${info.file.name} 实验报告上传失败.`);
-      }
+    onPageComplete(page) {
+       dispatch({
+        type: 'studentExperiment/updateState',
+        payload: { page },
+      });
+    },
+    handlePrevious () {
+      dispatch({
+        type: 'studentExperiment/updateState',
+        payload: { page: page - 1 },
+      });
+    },
+    handleNext (){
+      dispatch({
+        type: 'studentExperiment/updateState',
+        payload: { page: page + 1 },
+      });
     },
   };
   return (
@@ -158,7 +193,6 @@ const Experiment = ({ dispatch, state }) => {
 Experiment.propTypes = {
   dispatch: PropTypes.func,
   state: PropTypes.object,
-
 };
 
 const mapStateToProps = state => ({ state });

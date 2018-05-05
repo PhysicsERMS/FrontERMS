@@ -1,20 +1,7 @@
 import fetch from 'dva/fetch';
-import { clearLocalStorage } from './index';
-/*
-function parseJSON(response) {
-  return response.json();
-}
-*/
-
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  }
-
-  const error = new Error(response.statusText);
-  error.response = response;
-  throw error;
-}
+import { stringify } from 'qs';
+import { message } from 'antd';
+import { getFormData } from './index';
 
 /**
  * Requests a URL, returning a promise.
@@ -24,29 +11,47 @@ function checkStatus(response) {
  * @return {object}           An object containing either "data" or "err"
  */
 export default async function request(url, options) {
-  const response = await fetch(url, {
-    method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    ...options,
-  });
-
-  checkStatus(response);
-
-  const data = await response.json();
-
-  // 登陆失效
-  if (data.code === 10010 || data.message === '登录认证错误，请重试') {
-    const error = new Error(data.message);
-    error.response = data;
-
-    clearLocalStorage();
-
-    // window.location.href = '/index.html';
-    throw error;
+  let newOptions;
+  let newUrl = url;
+  let responseBody = {};
+  const { body, params } = options;
+  if ((!(typeof body === 'string')) && body) {
+    newOptions = Object.assign({}, options, { body: getFormData(body) });
+    responseBody = {
+      credentials: 'same-origin',
+      ...newOptions,
+    };
+  } else {
+    newOptions = options;
+    responseBody = {
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      ...newOptions,
+    };
   }
+  // get
+  if (params) {
+    newUrl += `?${stringify(params)}`;
+  }
+  const response = await fetch(newUrl, responseBody);
 
+  if (response.status !== 200) {
+    message.error('网络或服务器异常！');
+    return {
+      data: {
+        code: response.status,
+      },
+    };
+  }
+  const data = await response.json();
+  if (data.code !== 200 && data.code !== '46') {
+    message.error(data.msg);
+    // 登录超时，跳转至登录页
+    if (data.code === '70201131') {
+      window.location = `http://${window.location.host}/index.html#/system/cloud/home`;
+    }
+  }
   return { data };
 }

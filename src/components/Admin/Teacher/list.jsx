@@ -19,7 +19,7 @@ const list = ({ loading, listData, pagination, onPageChange }) => {
     dataIndex: 'phone',
   }, {
     title: '办公室',
-    dataIndex: 'office ',
+    dataIndex: 'office',
   }, {
     title: '操作',
     dataIndex: '',
@@ -35,7 +35,7 @@ const list = ({ loading, listData, pagination, onPageChange }) => {
         loading={loading}
         onChange={onPageChange}
         pagination={pagination}
-        rowKey={record => record.number}
+        rowKey={record => record.id}
       />
     </div>
   );

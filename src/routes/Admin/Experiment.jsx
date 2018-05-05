@@ -31,9 +31,8 @@ const Experiment = ({ dispatch, state }) => {
         type: 'adminExperiment/query',
         payload: {
           page: {
-            pageno: 1, // 查看第几页内容 默认1
-            rowcount: 10, // 一页展示条数 默认10
-            orderby: {},
+            current: 1, // 查看第几页内容 默认1
+            pageSize: 10, // 一页展示条数 默认10
           },
           key: value,
         },
@@ -50,8 +49,8 @@ const Experiment = ({ dispatch, state }) => {
         type: 'adminExperiment/query',
         payload: {
           page: {
-            pageno: page.current, // 查看第几页内容 默认1
-            rowcount: page.pageSize, // 一页展示条数 默认10
+            current: page.current, // 查看第几页内容 默认1
+            pageSize: page.pageSize, // 一页展示条数 默认10
           },
           key: searchInfo,
         },

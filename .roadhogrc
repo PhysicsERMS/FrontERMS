@@ -24,8 +24,20 @@
     }
   },
   "proxy": {
-    "/mock/11/": {
-      "target": "http://127.0.0.1:3000",
+    "/admin": {
+      "target": "http://127.0.0.1:3001",
+      "changeOrigin": true
+    },
+    "/teacher": {
+      "target": "http://127.0.0.1:3001",
+      "changeOrigin": true
+    },
+    "/student": {
+      "target": "http://127.0.0.1:3001",
+      "changeOrigin": true
+    },
+    "/public": {
+      "target": "http://127.0.0.1:3001",
       "changeOrigin": true
     }
   }

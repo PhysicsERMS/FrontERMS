@@ -45,8 +45,8 @@ export default {
             type: 'query',
             payload: {
               page: {
-                pageno: 1, // 查看第几页内容 默认1
-                rowcount: 10, // 一页展示条数 默认10
+                current: 1, // 查看第几页内容 默认1
+                pageSize: 10, // 一页展示条数 默认10
                 orderby: {},
               },
               key: '',
@@ -57,14 +57,23 @@ export default {
     },
   },
   effects: {
-    * query({ payload }, { call, put }) {
-      // yield put({ type: 'showLoading' });
+    * query({ payload }, { call, put, select }) {
+      yield put({ type: 'showLoading' });
       const res = yield call(inquire, payload);
-      if (res.data.status === 200) {
+      const { code, data, page } = res.data;
+      console.log(page)
+      if (code === 200) {
+        const paginationOld = yield select(state => state.adminExperiment.pagination);
         yield put({
           type: 'querySuccess',
           payload: {
-            listData: res.data.data,
+            listData: data,
+            pagination: {
+              ...paginationOld,
+              total: page.total,
+              current: page.current,
+              pageSize: page.pageSize,
+            },
           },
         });
       } else {

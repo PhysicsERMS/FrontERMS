@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Table, Button } from 'antd';
 
 
-const list = ({ loading, listData, pagination, onPageChange }) => {
+const list = ({ loading, listData, pagination, onDetail, onPageChange }) => {
   const columns = [{
     title: '实验编号',
     dataIndex: 'id',
@@ -16,12 +16,12 @@ const list = ({ loading, listData, pagination, onPageChange }) => {
     dataIndex: 'name',
   }, {
     title: '教室',
-    dataIndex: 'room',
+    dataIndex: 'classRoom',
   }, {
     title: '操作',
     dataIndex: '',
     key: 'x',
-    render: () => (<Button type="primary" size="small">进入实验</Button>),
+    render: record => (<Button type="primary" size="small" onClick={() => onDetail(record)}>进入实验</Button>),
   }];
   return (
     <div>
@@ -42,6 +42,7 @@ list.propTypes = {
   loading: PropTypes.bool,
   listData: PropTypes.array,
   pagination: PropTypes.object,
+  onDetail: PropTypes.func,
   onPageChange: PropTypes.func,
 };
 

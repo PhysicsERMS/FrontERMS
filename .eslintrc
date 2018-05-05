@@ -1,7 +1,7 @@
 {
   "extends": "eslint-config-airbnb",
   "globals": {
-    "APP": true, // 允许全局变量APP,
+    "APP": true,
     "window": true
   },
   "plugins": [
@@ -21,6 +21,7 @@
   },
   "rules": {
     "no-console": 0,
+    "no-param-reassign": 0,
     "react/no-multi-comp": 0,
     "react/prop-types": 0,
     "react/forbid-prop-types": 0,
@@ -31,7 +32,6 @@
     "max-statements": [2, 50],
     "max-nested-callbacks": [2, 3],
     "camelcase": 2,
-    // "linebreak-style": ["error", "windows"]//允许windows开发环境
     "linebreak-style": 0,
     "jsx-a11y/href-no-hash": 0
   }

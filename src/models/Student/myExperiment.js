@@ -3,12 +3,14 @@
  * Author：Wangtaidong
  */
 import { message } from 'antd';
-import { inquire } from '../../services/Student/myExperiment';
+import { inquire, saveUrl } from '../../services/Student/myExperiment';
 
 export default {
   namespace: 'studentExperiment',
   state: {
     loading: false,
+    fileId: 0,
+    temUrl: '',
     listData: [{
       id: '10021',
       name: '电学元件的伏安特性研究',
@@ -38,8 +40,10 @@ export default {
       score: '98',
       preStatus: 1,
       preScore: '',
-      viewUrl: 'https://github.com/Maiduo007',
+      viewUrl: 'http://127.0.0.1:3001/1525437130744基于Web的高校学生评教系统的设计与实现.pdf',
     }],
+
+    // temUrl: '', //保存临时文件URL，hiddenModal时更新到相应列数据里
     pagination: {
       showSizeChanger: true,
       showQuickJumper: true,
@@ -51,6 +55,8 @@ export default {
     },
     file: [],
     fileUrl: '',
+    page: 1,
+    pages: 1,
     subModalVisible: false,
     viewModalVisible: false,
   },
@@ -62,8 +68,8 @@ export default {
             type: 'query',
             payload: {
               page: {
-                pageno: 1, // 查看第几页内容 默认1
-                rowcount: 10, // 一页展示条数 默认10
+                current: 1, // 查看第几页内容 默认1
+                pageSize: 10, // 一页展示条数 默认10
                 orderby: {},
               },
             },
@@ -73,19 +79,50 @@ export default {
     },
   },
   effects: {
-    * query({ payload }, { call, put }) {
-      // yield put({ type: 'showLoading' });
-      const response = yield call(inquire, payload);
-      if (response.data.status === 200) {
+    * query({ payload }, { call, put, select }) {
+      yield put({ type: 'showLoading' });
+      payload.id = 2;
+      const res = yield call(inquire, payload);
+      const { code, data, page } = res.data;
+      if (code === 200) {
+        const paginationOld = yield select(state => state.studentExperiment.pagination);
         yield put({
           type: 'querySuccess',
           payload: {
-            listData: response.data.data,
+            listData: data,
+            pagination: {
+              ...paginationOld,
+              total: page.total,
+              current: page.pagenum,
+              pageSize: page.pageSize,
+            },
           },
         });
       } else {
         yield put({ type: 'hideLoading' });
-        message.warning(response.data.msg);
+        message.warning(res.data.msg);
+      }
+    },
+
+    * saveUrl({ payload }, { call, put, select }) {
+      yield put({ type: 'showLoading' });
+      const res = yield call(saveUrl, payload);
+      const { code } = res.data;
+      if (code === 200) {
+        const pagination = yield select(state => state.adminTeacher.pagination);
+        yield put({
+          type: 'query',
+          payload: {
+            page: {
+              pageno: pagination.current,
+              rowcount: pagination.pageSize,
+              orderby: {},
+            },
+          },
+        });
+      } else {
+        yield put({ type: 'hideLoading' });
+        message.warning(res.data.msg);
       }
     },
   },

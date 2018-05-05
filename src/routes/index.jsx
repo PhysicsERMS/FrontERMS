@@ -11,6 +11,7 @@ import AStudent from './Admin/Student';
 import APersonal from './Admin/Personal';
 import THome from './Teacher/Home';
 import TMyExperiment from './Teacher/MyExperiment';
+import TDetail from './Teacher/DetailExper';
 import SHome from './Student/Home';
 import SMyExperiment from './Student/MyExperiment';
 
@@ -49,6 +50,10 @@ const routes = [
   {
     path: '/teacher/myExperiment',
     component: TMyExperiment,
+  },
+  {
+    path: '/teacher/experiment/:itemTd',
+    component: TDetail,
   },
   // 学生部分
   {

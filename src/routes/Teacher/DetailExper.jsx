@@ -1,26 +1,25 @@
 /**
- * Date：2018/4/2
+ * Date：2018/5/5
  * Author：Wangtaidong
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
-import List from '../../components/Teacher/MyExpriment/list';
+import List from '../../components/Teacher/Detail/list';
 
-const Experiment = ({ dispatch, state }) => {
-  const { loading, listData, pagination } = state.teacherExperiment;
+const Detail = ({ dispatch, state }) => {
+  const { loading, listData, pagination } = state.teacherDetail;
+
   const listProps = {
     loading,
     listData,
     pagination,
-    onDetail(params) {
-      dispatch({
-        type: 'teacherExperiment/detail',
-        payload: {
-          itemId: params.id,
-        },
-      });
+    onDownload() {
+      console.log('download');
+    },
+    onGrade() {
+      console.log('grade');
     },
     onPageChange(page) {
       dispatch({
@@ -41,12 +40,11 @@ const Experiment = ({ dispatch, state }) => {
   );
 };
 
-Experiment.propTypes = {
+Detail.propTypes = {
   dispatch: PropTypes.func,
   state: PropTypes.object,
-
 };
 
 const mapStateToProps = state => ({ state });
 
-export default connect(mapStateToProps)(Experiment);
+export default connect(mapStateToProps)(Detail);
