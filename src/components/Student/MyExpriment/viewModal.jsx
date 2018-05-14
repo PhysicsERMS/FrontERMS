@@ -23,7 +23,7 @@ const modal = ({
                  onDocumentComplete,
                  onPageComplete,
                  handlePrevious,
-                 handleNext
+                 handleNext,
                }) => {
   const modapOpt = {
     title,
@@ -35,7 +35,7 @@ const modal = ({
     onOk: onConfirm,
     onCancel,
   };
-  
+
   const renderPagination = (page, pages) => {
     let preButton = <li className={style.previous} onClick={handlePrevious}><Button size="small">上一页</Button></li>;
     if (page === 1) {
@@ -52,8 +52,8 @@ const modal = ({
           {nextButton}
         </ul>
       </nav>
-      );
-  }
+    );
+  };
 
   let pagination = null;
   if (pages) {
@@ -61,10 +61,7 @@ const modal = ({
   }
   return (
     <Modal {...modapOpt}>
-      {/*<iframe src={fileUrl} width="100%" height="650">
-        此浏览器不支持在线预览，请下载后查看: <a href={fileUrl}>Download PDF</a>
-      </iframe>*/}
-      <div style={{border: '1px solid #e8e8e8'}}>
+      <div style={{ border: '1px solid #e8e8e8' }}>
         <PDF
           file={fileUrl}
           onDocumentComplete={onDocumentComplete}

@@ -11,9 +11,9 @@ export async function detail(params) {
   });
 }
 
-export async function update(params) { // 编辑后保存门店信息
-  return request('/api/org/updateStoreData', {
+export async function grade(params) {
+  return request('/teacher/public/save', {
     method: 'post',
-    body: params,
+    body: JSON.stringify(params),
   });
 }

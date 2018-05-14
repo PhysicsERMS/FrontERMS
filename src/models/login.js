@@ -1,8 +1,8 @@
 import { message } from 'antd';
 import { routerRedux } from 'dva/router';
 import { saveSession, delSession } from '../utils';
-import { quitSystem } from '../services/login';
-// adminLogin, teacherLogin, studentLogin,
+import { quitSystem, adminLogin, studentLogin, teacherLogin } from '../services/login';
+
 export default {
   namespace: 'login',
   state: {
@@ -12,66 +12,60 @@ export default {
   },
   subscriptions: {},
   effects: {
-    * adminLogin({ payload }, { put }) {
-      saveSession('isLogin', 'yes');
-      saveSession('identity', payload.identity);
-
-      yield put(routerRedux.push('/admin/home'));
-      message.success('登陆成功');
-      // const res = yield call(adminLogin, payload);
-      // const { data, code } = res;
-      // if (code === 200) {
-      //   yield put({
-      //     type: 'app/updateState',
-      //     payload: {
-      //       user: {
-      //         username: data.userName || '',
-      //       },
-      //     },
-      //   });
-      // } else {
-      //   message.warning(res.data.msg);
-      // }
+    * adminLogin({ payload }, { call, put }) {
+      const res = yield call(adminLogin, payload);
+      const { data, code } = res.data;
+      if (code === 200) {
+        yield put({
+          type: 'app/updateState',
+          payload: {
+            user: data || {},
+          },
+        });
+        saveSession('isLogin', 'yes');
+        saveSession('identity', payload.identity);
+        yield put(routerRedux.push('/admin/home'));
+        message.success('登陆成功');
+      } else {
+        message.warning(res.data.msg);
+      }
     },
-    * teacherLogin({ payload }, { put }) {
-      saveSession('isLogin', 'yes');
-      saveSession('identity', payload.identity);
-      yield put(routerRedux.push('/teacher/home'));
-      message.success('登陆成功');
-      // const res = yield call(teacherLogin, payload);
-      // const { data, code } = res;
-      // if (code === 200) {
-      //   yield put({
-      //     type: 'app/updateState', // 登陆成功返回完整user信息，并且更新保存在app中
-      //     payload: {
-      //       user: {
-      //         username: data.userName || '',
-      //       },
-      //     },
-      //   });
-      // } else {
-      //   message.warning(res.data.msg);
-      // }
+    * teacherLogin({ payload }, { put, call }) {
+      const res = yield call(teacherLogin, payload);
+      const { data, code } = res.data;
+      if (code === 200) {
+        yield put({
+          type: 'app/updateState', // 登陆成功返回完整user信息，并且更新保存在app中
+          payload: {
+            user: data || {},
+          },
+        });
+        saveSession('isLogin', 'yes');
+        saveSession('identity', payload.identity);
+        yield put(routerRedux.push('/teacher/home'));
+        message.success('登陆成功');
+      } else {
+        message.warning(res.data.msg);
+      }
     },
-    * studentLogin({ payload }, { put }) {
-      saveSession('isLogin', 'yes');
-      saveSession('identity', payload.identity);
-      yield put(routerRedux.push('/student/home'));
-      message.success('登陆成功');
-      // const res = yield call(studentLogin, payload);
-      // const { data, code } = res;
-      // if (code === 200) {
-      //   yield put({
-      //     type: 'app/updateState',
-      //     payload: {
-      //       user: {
-      //         username: data.userName || '',
-      //       },
-      //     },
-      //   });
-      // } else {
-      //   message.warning(res.data.msg);
-      // }
+    * studentLogin({ payload }, { put, call }) {
+      const res = yield call(studentLogin, payload);
+      const { data, code } = res.data;
+      if (code === 200) {
+        yield put({
+          type: 'app/updateState',
+          payload: {
+            user: data || {},
+          },
+        });
+        saveSession('isLogin', 'yes');
+        saveSession('identity', payload.identity);
+        saveSession('userid', data.id);
+        yield put(routerRedux.push('/student/home'));
+        message.success('登陆成功');
+      } else {
+        message.warning(res.data.msg);
+      }
     },
     * logoutSystem({ payload }, { call }) {
       window.location = `${window.location.origin}/index.html#/login`;

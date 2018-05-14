@@ -5,22 +5,22 @@
 import request from '../utils/request';
 
 export async function adminLogin(params) {
-  return request('/api/org/getAll', {
+  return request('/admin/login', {
     method: 'post',
-    body: params,
+    body: JSON.stringify(params),
   });
 }
 
 export async function teacherLogin(params) {
-  return request('/api/org/getStoreData', {
+  return request('/teacher/login', {
     method: 'post',
-    body: params,
+    body: JSON.stringify(params),
   });
 }
 
 export async function studentLogin(params) {
-  return request('/api/org/updateStoreData', {
+  return request('/student/login', {
     method: 'post',
-    body: params,
+    body: JSON.stringify(params),
   });
 }

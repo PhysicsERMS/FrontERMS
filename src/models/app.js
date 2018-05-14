@@ -12,11 +12,7 @@ export default {
   namespace: 'app',
   state: {
     identity: '',
-    user: {
-      name: 'admin',
-      email: 'iamdbd@163.com',
-      phone: '18560684220',
-    },
+    user: {},
     isLogin: false,
     permissions: {
       visit: {

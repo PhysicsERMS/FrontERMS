@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Table, Button, Badge } from 'antd';
 
 
-const list = ({ loading, listData, pagination, onPageChange, onDownload, onGrade }) => {
+const list = ({ loading, listData, pagination, onPageChange, onGrade }) => {
   const columns = [{
     title: '学号',
     dataIndex: 'num',
@@ -54,10 +54,10 @@ const list = ({ loading, listData, pagination, onPageChange, onDownload, onGrade
       let downBtn = <Button type="primary" size="small" disabled>下载报告</Button>;
       let gradeBtn = <Button type="primary" size="small" disabled>打分</Button>;
       if (record.status === '1') {
-        downBtn = <Button type="primary" size="small" onClick={() => onDownload(record)}>下载报告</Button>;
+        downBtn = <Button type="primary" size="small"><a href={record.downloadUrl} download>下载报告</a></Button>;
         gradeBtn = <Button type="primary" size="small" onClick={() => onGrade(record)}>打分</Button>;
       } else if (record.status === '2') {
-        downBtn = <Button type="primary" size="small" onClick={() => onDownload(record)}>下载报告</Button>;
+        downBtn = <Button type="primary" size="small"><a href={record.downloadUrl} download>下载报告</a></Button>;
         gradeBtn = <Button type="primary" size="small" disabled>打分</Button>;
       }
       return (<div>
@@ -85,7 +85,6 @@ list.propTypes = {
   listData: PropTypes.array,
   pagination: PropTypes.object,
   onPageChange: PropTypes.func,
-  onDownload: PropTypes.func,
   onGrade: PropTypes.func,
 };
 

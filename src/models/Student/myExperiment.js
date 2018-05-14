@@ -10,7 +10,7 @@ export default {
   state: {
     loading: false,
     fileId: 0,
-    temUrl: '',
+    temUrl: '',  // 保存临时文件URL，hiddenModal时更新到相应列数据里
     listData: [{
       id: '10021',
       name: '电学元件的伏安特性研究',
@@ -40,10 +40,8 @@ export default {
       score: '98',
       preStatus: 1,
       preScore: '',
-      viewUrl: 'http://127.0.0.1:3001/1525437130744基于Web的高校学生评教系统的设计与实现.pdf',
+      viewUrl: '',
     }],
-
-    // temUrl: '', //保存临时文件URL，hiddenModal时更新到相应列数据里
     pagination: {
       showSizeChanger: true,
       showQuickJumper: true,
@@ -81,7 +79,8 @@ export default {
   effects: {
     * query({ payload }, { call, put, select }) {
       yield put({ type: 'showLoading' });
-      payload.id = 2;
+      const user = yield select(state => state.app.user);
+      payload.id = user.id;
       const res = yield call(inquire, payload);
       const { code, data, page } = res.data;
       if (code === 200) {
@@ -114,8 +113,8 @@ export default {
           type: 'query',
           payload: {
             page: {
-              pageno: pagination.current,
-              rowcount: pagination.pageSize,
+              current: pagination.current,
+              pageSize: pagination.pageSize,
               orderby: {},
             },
           },

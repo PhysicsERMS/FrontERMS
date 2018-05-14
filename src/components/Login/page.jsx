@@ -21,6 +21,7 @@ const page = ({
         return false;
       }
       onLogin(values);
+      return true;
     });
   }
   return (
@@ -31,7 +32,7 @@ const page = ({
       </div>
       <form>
         <FormItem hasFeedback>
-          {getFieldDecorator('username', {
+          {getFieldDecorator('name', {
             rules: [
               {
                 required: true,
@@ -72,13 +73,14 @@ const page = ({
 
       </form>
     </div>
-  )
-}
+  );
+};
 
 page.propTypes = {
+  loading: PropTypes.bool,
   form: PropTypes.object,
-  login: PropTypes.object,
-  dispatch: PropTypes.func,
-}
+  onLogin: PropTypes.func,
+  onSelect: PropTypes.func,
+};
 
-export default Form.create()(page)
+export default Form.create()(page);

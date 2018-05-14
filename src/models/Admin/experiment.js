@@ -61,7 +61,6 @@ export default {
       yield put({ type: 'showLoading' });
       const res = yield call(inquire, payload);
       const { code, data, page } = res.data;
-      console.log(page)
       if (code === 200) {
         const paginationOld = yield select(state => state.adminExperiment.pagination);
         yield put({

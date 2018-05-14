@@ -46,12 +46,18 @@ export default async function request(url, options) {
     };
   }
   const data = await response.json();
-  if (data.code !== 200 && data.code !== '46') {
-    message.error(data.msg);
-    // 登录超时，跳转至登录页
-    if (data.code === '70201131') {
-      window.location = `http://${window.location.host}/index.html#/system/cloud/home`;
-    }
+  // if (data.code !== 200) {
+  //   message.error(data.msg);
+  //   // 登录超时，跳转至登录页
+  //   if (data.code === '70201131') {
+  //     window.location = `http://${window.location.host}/index.html#/login`;
+  //   }
+  // }
+
+
+  // 会话过期，重新登录
+  if (data.code === 10233) {
+    window.location = `http://${window.location.host}/index.html#/login`;
   }
   return { data };
 }

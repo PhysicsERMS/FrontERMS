@@ -4,13 +4,20 @@
  */
 import { message } from 'antd';
 import pathToRegexp from 'path-to-regexp';
-import { detail } from '../../services/Teacher/detail';
+import { detail, grade } from '../../services/Teacher/detail';
 
 export default {
   namespace: 'teacherDetail',
   state: {
     loading: false,
     listData: [],
+    itemId: '', // 实验id
+    preScore: '',
+    score: '',
+    operareScore: '',
+    viewUrl: '', // 上传实验报告返回url
+    subId: '', // 保存预约实验id，用于文件上传和打分操作
+    modalVisible: false,
     pagination: {
       showSizeChanger: true,
       showQuickJumper: true,
@@ -32,9 +39,14 @@ export default {
         if (match) {
           const itemId = match[1];
           dispatch({
+            type: 'updateState',
+            payload: {
+              itemId,
+            },
+          });
+          dispatch({
             type: 'query',
             payload: {
-              id: itemId,
               page: {
                 current: 1, // 查看第几页内容 默认1
                 pageSize: 10, // 一页展示条数 默认10
@@ -48,8 +60,9 @@ export default {
   },
   effects: {
     * query({ payload }, { call, put, select }) {
+      const id = yield select(state => state.teacherDetail.itemId);
       yield put({ type: 'showLoading' });
-      const res = yield call(detail, payload);
+      const res = yield call(detail, { ...payload, id });
       const { code, data, page } = res.data;
       if (code === 200) {
         const paginationOld = yield select(state => state.teacherDetail.pagination);
@@ -62,6 +75,27 @@ export default {
               total: page.total,
               current: page.current,
               pageSize: page.pageSize,
+            },
+          },
+        });
+      } else {
+        yield put({ type: 'hideLoading' });
+        message.warning(res.data.msg);
+      }
+    },
+    * grade({ payload }, { call, put, select }) {
+      yield put({ type: 'showLoading' });
+      const res = yield call(grade, payload);
+      const { code } = res.data;
+      if (code === 200) {
+        const pagination = yield select(state => state.teacherDetail.pagination);
+        yield put({
+          type: 'query',
+          payload: {
+            page: {
+              current: pagination.current,
+              pageSize: pagination.pageSize,
+              orderby: {},
             },
           },
         });

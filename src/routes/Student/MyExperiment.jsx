@@ -24,7 +24,6 @@ const Experiment = ({ dispatch, state }) => {
     fileId,
     temUrl,
   } = state.studentExperiment;
-  console.log(fileId)
   const listProps = {
     loading,
     listData,
@@ -53,13 +52,13 @@ const Experiment = ({ dispatch, state }) => {
         },
       });
     },
-    onPageChange(page) {
+    onPageChange(pagese) {
       dispatch({
         type: 'studentExperiment/query',
         payload: {
           page: {
-            pageno: page.current, // 查看第几页内容 默认1
-            rowcount: page.pageSize, // 一页展示条数 默认10
+            current: pagese.current, // 查看第几页内容 默认1
+            pageSize: pagese.pageSize, // 一页展示条数 默认10
           },
         },
       });
@@ -84,16 +83,6 @@ const Experiment = ({ dispatch, state }) => {
           filePath: temUrl,
         },
       });
-      dispatch({
-        type: 'studentExperiment/query',
-        payload: {
-          page: {
-            pageno: pagination.current,
-            rowcount: pagination.pageSize,
-            orderby: {},
-          },
-        },
-      });
     },
     onCancel() {
       dispatch({
@@ -113,7 +102,6 @@ const Experiment = ({ dispatch, state }) => {
       });
     },
     onChange(info) {
-      console.log(info)
       const status = info.file.status;
       // if (status !== 'uploading') {
       //   console.log(info.file, info.fileList);
@@ -163,18 +151,18 @@ const Experiment = ({ dispatch, state }) => {
       });
     },
     onPageComplete(page) {
-       dispatch({
+      dispatch({
         type: 'studentExperiment/updateState',
         payload: { page },
       });
     },
-    handlePrevious () {
+    handlePrevious() {
       dispatch({
         type: 'studentExperiment/updateState',
         payload: { page: page - 1 },
       });
     },
-    handleNext (){
+    handleNext() {
       dispatch({
         type: 'studentExperiment/updateState',
         payload: { page: page + 1 },

@@ -12,7 +12,7 @@ export async function inquire(params) {
 }
 
 export async function saveUrl(params) {
-  return request('/public/upload/save', {
+  return request('/student/public/save', {
     method: 'post',
     body: JSON.stringify(params),
   });

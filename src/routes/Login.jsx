@@ -1,9 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'dva';
 import { message } from 'antd';
-import { routerRedux } from 'dva/router';
+// import { routerRedux } from 'dva/router';
 import LoginPage from '../components/Login/page';
-import { getSession, toJson, saveSession, toStr, config, queryURL } from '../utils/index';
+// import { getSession, toJson, saveSession, toStr, config, queryURL } from '../utils/index';
 
 
 const Login = ({ dispatch, state }) => {

@@ -30,6 +30,7 @@ const App = ({ children, dispatch, app, loading, location }) => {
     teacherMenu,
     studentMenu,
   } = app;
+  console.log(user)
   let { pathname } = location;
   // 根据身份信息显示不同菜单
   let menuData = [];

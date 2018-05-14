@@ -31,7 +31,7 @@ const modal = ({
     name: 'file',
     accept: 'application/pdf',
     multiple: true,
-    action: '/public/upload',
+    action: '/student/public/report',
     beforeUpload,
     onChange,
   };
