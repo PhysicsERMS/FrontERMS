@@ -3,31 +3,15 @@
  * Author：Wangtaidong
  */
 import { message } from 'antd';
-import { inquire } from '../../services/Teacher/home';
+import { inquire, create, update, remove } from '../../services/Teacher/home';
 
 export default {
   namespace: 'teacherHome',
   state: {
     loading: false,
-    listData: [
-      {
-        title: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        content: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        time: '2018-03-04',
-        teacherName: 'Buxingjie',
-      }, {
-        title: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        content: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        time: '2018-03-04',
-        teacherName: 'Buxingjie',
-      }, {
-        title: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        content: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        time: '2018-03-04',
-        teacherName: 'Buxingjie',
-      },
-    ],
+    listData: [],
     modalVisible: false,
+    subModalVisible: false,
     currentItem: {}, // 当前通知
     pagination: {
       showSizeChanger: true,
@@ -47,8 +31,8 @@ export default {
             type: 'query',
             payload: {
               page: {
-                pageno: 1, // 查看第几页内容 默认1
-                rowcount: 10, // 一页展示条数 默认10
+                current: 1, // 查看第几页内容 默认1
+                pageSize: 10, // 一页展示条数 默认10
                 orderby: {},
               },
             },
@@ -58,15 +42,83 @@ export default {
     },
   },
   effects: {
-    * query({ payload }, { call, put }) {
+    * query({ payload }, { call, put, select }) {
+      const teacherId = yield select(state => state.app.user.id);
+      payload.tId = teacherId;
       yield put({ type: 'showLoading' });
       const res = yield call(inquire, payload);
-      const { data, code } = res;
+      const { data, code } = res.data;
       if (code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            listData: data.data,
+            listData: data,
+          },
+        });
+      } else {
+        yield put({ type: 'hideLoading' });
+        message.warning(res.data.msg);
+      }
+    },
+    * add({ payload }, { call, put, select }) {
+      const teacherId = yield select(state => state.app.user.id);
+      payload.tId = teacherId;
+      yield put({ type: 'showLoading' });
+      const res = yield call(create, payload);
+      const { code } = res.data;
+      if (code === 200) {
+        yield put({
+          type: 'query',
+          payload: {
+            page: {
+              current: 1, // 查看第几页内容 默认1
+              pageSize: 10, // 一页展示条数 默认10
+              orderby: {},
+            },
+          },
+        });
+      } else {
+        yield put({ type: 'hideLoading' });
+        message.warning(res.data.msg);
+      }
+    },
+
+    * edit({ payload }, { call, put, select }) {
+      const teacherId = yield select(state => state.app.user.id);
+      payload.tId = teacherId;
+      yield put({ type: 'showLoading' });
+      const res = yield call(update, payload);
+      const { code } = res.data;
+      if (code === 200) {
+        yield put({
+          type: 'query',
+          payload: {
+            page: {
+              current: 1, // 查看第几页内容 默认1
+              pageSize: 10, // 一页展示条数 默认10
+              orderby: {},
+            },
+          },
+        });
+      } else {
+        yield put({ type: 'hideLoading' });
+        message.warning(res.data.msg);
+      }
+    },
+
+    * delete({ payload }, { call, put }) {
+      yield put({ type: 'showLoading' });
+      const res = yield call(remove, payload);
+      const { code } = res.data;
+      if (code === 200) {
+        yield put({
+          type: 'query',
+          payload: {
+            page: {
+              current: 1, // 查看第几页内容 默认1
+              pageSize: 10, // 一页展示条数 默认10
+              orderby: {},
+            },
           },
         });
       } else {

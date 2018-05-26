@@ -23,7 +23,7 @@
     "dva-loading": "^0.2.0",
     "jsonp": "^0.2.1",
     "lodash": "^4.17.4",
-    "moment": "^2.17.1",
+    "moment": "^2.22.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^1.7.0",
     "prop-types": "^15.5.10",

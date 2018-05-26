@@ -9,24 +9,7 @@ export default {
   namespace: 'adminHome',
   state: {
     loading: false,
-    listData: [
-      {
-        title: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        content: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交,请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        time: '2018-03-04',
-        teacherName: 'Buxingjie',
-      }, {
-        title: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        content: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        time: '2018-03-04',
-        teacherName: 'Buxingjie',
-      }, {
-        title: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        content: '请同学们在第五周之前将电学元件的伏安特性研究实验报告提交',
-        time: '2018-03-04',
-        teacherName: 'Buxingjie',
-      },
-    ],
+    listData: [],
     modalVisible: false,
     currentItem: {}, // 当前通知
     pagination: {
@@ -47,8 +30,8 @@ export default {
             type: 'query',
             payload: {
               page: {
-                pageno: 1, // 查看第几页内容 默认1
-                rowcount: 10, // 一页展示条数 默认10
+                current: 1, // 查看第几页内容 默认1
+                pageSize: 10, // 一页展示条数 默认10
                 orderby: {},
               },
             },
@@ -61,12 +44,12 @@ export default {
     * query({ payload }, { call, put }) {
       yield put({ type: 'showLoading' });
       const res = yield call(inquire, payload);
-      const { data, code } = res;
+      const { data, code } = res.data;
       if (code === 200) {
         yield put({
           type: 'querySuccess',
           payload: {
-            listData: data.data,
+            listData: data,
           },
         });
       } else {

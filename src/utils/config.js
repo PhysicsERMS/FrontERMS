@@ -3,7 +3,7 @@ const APIV2 = '/api/v2';
 
 
 module.exports = {
-  name: 'EDPS', // Experiment Data Processing System
+  name: 'ERMS',
   prefix: 'rt-report',
   footerText: 'UPC大学物理实验报告管理系统 v1.0',
   logo: './images/logo.png',

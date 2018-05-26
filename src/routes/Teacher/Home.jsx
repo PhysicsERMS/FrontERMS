@@ -7,9 +7,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import List from '../../components/Teacher/Home/list';
 import Modal from '../../components/Teacher/Home/modal';
+import SubModal from '../../components/Teacher/Home/subModal';
 
 const Home = ({ dispatch, state }) => {
-  const { loading, listData, pagination, modalVisible, currentItem } = state.teacherHome;
+  const {
+    loading,
+    listData,
+    pagination,
+    currentItem,
+    modalVisible,
+    subModalVisible,
+  } = state.teacherHome;
   const listProps = {
     loading,
     listData,
@@ -23,6 +31,32 @@ const Home = ({ dispatch, state }) => {
         type: 'teacherHome/updateState',
         payload: {
           currentItem: param,
+        },
+      });
+    },
+    onEdit(e, item) {
+      e.preventDefault();
+      dispatch({
+        type: 'teacherHome/updateState',
+        payload: {
+          subModalVisible: true,
+          currentItem: item,
+        },
+      });
+    },
+    onDelete(item) {
+      dispatch({
+        type: 'teacherHome/delete',
+        payload: {
+          id: item.id,
+        },
+      });
+    },
+    onSub() {
+      dispatch({
+        type: 'teacherHome/updateState',
+        payload: {
+          subModalVisible: true,
         },
       });
     },
@@ -57,10 +91,55 @@ const Home = ({ dispatch, state }) => {
     },
   };
 
+  const subModalProps = {
+    title: '查看通知',
+    subModalVisible,
+    okText: '确定',
+    cancelText: '取消',
+    currentItem,
+    onConfirm(params) {
+      if (currentItem.id) {
+        dispatch({
+          type: 'teacherHome/edit',
+          payload: {
+            id: currentItem.id,
+            title: params.title,
+            content: params.content,
+          },
+        });
+      } else {
+        dispatch({
+          type: 'teacherHome/add',
+          payload: {
+            title: params.title,
+            content: params.content,
+          },
+        });
+      }
+      dispatch({
+        type: 'teacherHome/updateState',
+        payload: {
+          subModalVisible: false,
+          currentItem: {},
+        },
+      });
+    },
+    onCancel() {
+      dispatch({
+        type: 'teacherHome/updateState',
+        payload: {
+          subModalVisible: false,
+          currentItem: {},
+        },
+      });
+    },
+  };
+
   return (
     <div>
       <List {...listProps} />
       { modalVisible && <Modal {...modalProps} /> }
+      { subModalVisible && <SubModal {...subModalProps} /> }
     </div>
   );
 };

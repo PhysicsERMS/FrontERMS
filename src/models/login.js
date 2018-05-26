@@ -24,6 +24,7 @@ export default {
         });
         saveSession('isLogin', 'yes');
         saveSession('identity', payload.identity);
+        saveSession('user', JSON.stringify(data));
         yield put(routerRedux.push('/admin/home'));
         message.success('登陆成功');
       } else {
@@ -42,6 +43,7 @@ export default {
         });
         saveSession('isLogin', 'yes');
         saveSession('identity', payload.identity);
+        saveSession('user', JSON.stringify(data));
         yield put(routerRedux.push('/teacher/home'));
         message.success('登陆成功');
       } else {
@@ -60,7 +62,7 @@ export default {
         });
         saveSession('isLogin', 'yes');
         saveSession('identity', payload.identity);
-        saveSession('userid', data.id);
+        saveSession('user', JSON.stringify(data));
         yield put(routerRedux.push('/student/home'));
         message.success('登陆成功');
       } else {
@@ -78,6 +80,7 @@ export default {
         // 删除相关缓存
         delSession('isLogin');
         delSession('identity');
+        delSession('user');
       }
     },
   },

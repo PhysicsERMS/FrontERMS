@@ -36,6 +36,7 @@ const page = ({
             rules: [
               {
                 required: true,
+                message: '请填写用户名',
               },
             ],
           })(<Input onPressEnter={handleOk} placeholder="用户名" />)}
@@ -45,6 +46,7 @@ const page = ({
             rules: [
               {
                 required: true,
+                message: '请填写密码',
               },
             ],
           })(<Input type="password" onPressEnter={handleOk} placeholder="密码" />)}
@@ -54,6 +56,7 @@ const page = ({
             rules: [
               {
                 required: true,
+                message: '请选择一种身份',
               },
             ],
           })(<Select placeholder="选择一种身份" onSelect={onSelect}>

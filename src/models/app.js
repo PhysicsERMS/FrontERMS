@@ -97,12 +97,19 @@ export default {
   subscriptions: {
     setup({ dispatch }) {
       let tid;
+      const user = getSession('user');
       window.onresize = () => {
         clearTimeout(tid);
         tid = setTimeout(() => {
           dispatch({ type: 'changeNavbar' });
         }, 300);
       };
+      dispatch({
+        type: 'updateState',
+        payload: {
+          user: JSON.parse(user) || {},
+        },
+      });
     },
   },
   effects: {

@@ -5,6 +5,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { List, Avatar } from 'antd';
+import moment from 'moment';
 import { cutStr } from '../../../utils/index';
 
 const list = ({ loading, listData, onView }) => {
@@ -21,7 +22,7 @@ const list = ({ loading, listData, onView }) => {
               title={<a onClick={(e) => { onView(e, item); }}><h4>{item.title}</h4></a>}
               description={cutStr(item.content, 60)}
             />
-            <div>{item.time} By {item.teacherName}</div>
+            <div>{moment(Number(item.createTime)).format('L')} By {item.teacherName}</div>
           </List.Item>
         )}
       />

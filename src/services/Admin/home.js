@@ -4,8 +4,9 @@
  */
 import request from '../../utils/request';
 
-export default async function inquire() {
-  return request('/mock/11/physicsEDPS/getNotices', {
+export async function inquire(params) {
+  return request('/notice/getNotices', {
     method: 'post',
+    body: JSON.stringify(params),
   });
 }

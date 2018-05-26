@@ -57,7 +57,8 @@ export default {
   },
   effects: {
     * query({ payload }, { call, put, select }) {
-      payload.id = 4;
+      const user = yield select(state => state.app.user);
+      payload.id = user.id;
       yield put({ type: 'showLoading' });
       const res = yield call(inquire, payload);
       const { code, data, page } = res.data;

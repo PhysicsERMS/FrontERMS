@@ -16,7 +16,6 @@ const Home = ({ dispatch, state }) => {
     pagination,
     onView(e, param) {
       e.preventDefault();
-      console.warn(param)
       dispatch({
         type: 'adminHome/showModal',
       });
@@ -32,8 +31,8 @@ const Home = ({ dispatch, state }) => {
         type: 'adminHome/query',
         payload: {
           page: {
-            pageno: page.current, // 查看第几页内容 默认1
-            rowcount: page.pageSize, // 一页展示条数 默认10
+            current: page.current, // 查看第几页内容 默认1
+            pageSize: page.pageSize, // 一页展示条数 默认10
           },
         },
       });
