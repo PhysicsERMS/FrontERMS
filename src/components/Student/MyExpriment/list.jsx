@@ -39,21 +39,25 @@ const list = ({ loading, listData, pagination, onPageChange, onSubmit, onView })
     key: 'score',
     render: (record) => {
       if (record.status === '2') {
-        return record.score;
+        return ((record.preScore * 0.1) +
+        (record.operateScore * 0.2) +
+        (record.score * 0.7)).toFixed(1);
       }
       return '无';
     },
-  }, {
-    title: '实验预习',
-    dataIndex: '',
-    key: 'preview',
-    render: (record) => {
-      if (record.preStatus === '1') {
-        return '已预习';
-      }
-      return <a href="#">预习</a>;
-    },
-  }, {
+  },
+  // }, {
+  //   title: '实验预习',
+  //   dataIndex: '',
+  //   key: 'preview',
+  //   render: (record) => {
+  //     if (record.preStatus === '1') {
+  //       return '已预习';
+  //     }
+  //     return <a href="#">预习</a>;
+  //   },
+  // },
+  {
     title: '操作',
     dataIndex: '',
     key: 'option',

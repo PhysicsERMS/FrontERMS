@@ -3,7 +3,7 @@ const APIV2 = '/api/v2';
 
 
 module.exports = {
-  name: 'ERMS',
+  name: '实验报告管理系统',
   prefix: 'rt-report',
   footerText: 'UPC大学物理实验报告管理系统 v1.0',
   logo: './images/logo.png',

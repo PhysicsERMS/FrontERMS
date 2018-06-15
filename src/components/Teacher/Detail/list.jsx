@@ -23,17 +23,19 @@ const list = ({ loading, listData, pagination, onPageChange, onGrade }) => {
   }, {
     title: '联系方式',
     dataIndex: 'phone',
-  }, {
-    title: '预习情况',
-    dataIndex: '',
-    key: 'preview',
-    render: (record) => {
-      if (record.preStatus === '1') {
-        return <a href="#">查看</a>;
-      }
-      return '未预习';
-    },
-  }, {
+  },
+  // }, {
+  //   title: '预习情况',
+  //   dataIndex: '',
+  //   key: 'preview',
+  //   render: (record) => {
+  //     if (record.preStatus === '1') {
+  //       return <a href="#">查看</a>;
+  //     }
+  //     return '未预习';
+  //   },
+  // }, {
+  {
     title: '状态',
     dataIndex: '',
     key: 'status',
@@ -52,13 +54,13 @@ const list = ({ loading, listData, pagination, onPageChange, onGrade }) => {
     key: 'option',
     render: (record) => {
       let downBtn = <Button type="primary" size="small" disabled>下载报告</Button>;
-      let gradeBtn = <Button type="primary" size="small" disabled>打分</Button>;
+      let gradeBtn = <Button type="primary" size="small" disabled>反馈</Button>;
       if (record.status === '1') {
         downBtn = <Button type="primary" size="small"><a href={record.downloadUrl} download>下载报告</a></Button>;
-        gradeBtn = <Button type="primary" size="small" onClick={() => onGrade(record)}>打分</Button>;
+        gradeBtn = <Button type="primary" size="small" onClick={() => onGrade(record)}>反馈</Button>;
       } else if (record.status === '2') {
         downBtn = <Button type="primary" size="small"><a href={record.downloadUrl} download>下载报告</a></Button>;
-        gradeBtn = <Button type="primary" size="small" disabled>打分</Button>;
+        gradeBtn = <Button type="primary" size="small" disabled>反馈</Button>;
       }
       return (<div>
         {downBtn} {gradeBtn}

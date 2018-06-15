@@ -5,9 +5,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, Button } from 'antd';
-import PDF from 'react-pdf-js';
-import style from './pdf.less';
+import { Modal } from 'antd';
+// import PDF from 'react-pdf-js';
+// import style from './pdf.less';
 
 
 const modal = ({
@@ -16,14 +16,14 @@ const modal = ({
                  viewModalVisible,
                  okText,
                  cancelText,
-                 page,
-                 pages,
+                //  page,
+                //  pages,
                  onConfirm,
                  onCancel,
-                 onDocumentComplete,
-                 onPageComplete,
-                 handlePrevious,
-                 handleNext,
+                //  onDocumentComplete,
+                //  onPageComplete,
+                //  handlePrevious,
+                //  handleNext,
                }) => {
   const modapOpt = {
     title,
@@ -36,40 +36,43 @@ const modal = ({
     onCancel,
   };
 
-  const renderPagination = (page, pages) => {
-    let preButton = <li className={style.previous} onClick={handlePrevious}><Button size="small">上一页</Button></li>;
-    if (page === 1) {
-      preButton = <li className={style.previous}><Button size="small" disabled>上一页</Button></li>;
-    }
-    let nextButton = <li className={style.next} onClick={handleNext}><Button size="small">下一页</Button></li>;
-    if (page === pages) {
-      nextButton = <li className={style.next}><Button size="small" disabled>下一页</Button></li>;
-    }
-    return (
-      <nav>
-        <ul className={style.pager}>
-          {preButton}
-          {nextButton}
-        </ul>
-      </nav>
-    );
-  };
+  // const renderPagination = (page, pages) => {
+  //   let preButton = <li className={style.previous}
+          // onClick={handlePrevious}><Button size="small">上一页</Button></li>;
+  //   if (page === 1) {
+  //     preButton = <li className={style.previous}><Button size="small" disabled>上一页</Button></li>;
+  //   }
+  //   let nextButton = <li className={style.next}
+          // onClick={handleNext}><Button size="small">下一页</Button></li>;
+  //   if (page === pages) {
+  //     nextButton = <li className={style.next}><Button size="small" disabled>下一页</Button></li>;
+  //   }
+  //   return (
+  //     <nav>
+  //       <ul className={style.pager}>
+  //         {preButton}
+  //         {nextButton}
+  //       </ul>
+  //     </nav>
+  //   );
+  // };
 
-  let pagination = null;
-  if (pages) {
-    pagination = renderPagination(page, pages);
-  }
+  // let pagination = null;
+  // if (pages) {
+  //   pagination = renderPagination(page, pages);
+  // }
   return (
     <Modal {...modapOpt}>
       <div style={{ border: '1px solid #e8e8e8' }}>
-        <PDF
+        {/* <PDF
           file={fileUrl}
           onDocumentComplete={onDocumentComplete}
           onPageComplete={onPageComplete}
           page={page}
           scale={1.5}
-        />
-        {pagination}
+        /> */}
+        {/* {pagination} */}
+        <iframe src={fileUrl} width="100%" height="580px" />
       </div>
     </Modal>
   );
@@ -81,14 +84,14 @@ modal.propTypes = {
   viewModalVisible: PropTypes.bool,
   okText: PropTypes.string,
   cancelText: PropTypes.string,
-  page: PropTypes.number,
-  pages: PropTypes.number,
+  // page: PropTypes.number,
+  // pages: PropTypes.number,
   onConfirm: PropTypes.func,
   onCancel: PropTypes.func,
-  onDocumentComplete: PropTypes.func,
-  onPageComplete: PropTypes.func,
-  handlePrevious: PropTypes.func,
-  handleNext: PropTypes.func,
+  // onDocumentComplete: PropTypes.func,
+  // onPageComplete: PropTypes.func,
+  // handlePrevious: PropTypes.func,
+  // handleNext: PropTypes.func,
 };
 
 export default modal;
