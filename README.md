@@ -1,6 +1,6 @@
 ## 基于Web的大学物理实验报告管理系统（前端）
 
-> 后端代码请移步：https://github.com/Maiduo007/BackendERMS/tree/feature20180427
+> 后端代码请移步：https://github.com/PhysicsERMS/BackendERMS
 ------------
 * 项目依赖React、Ant Design、DVA, 工程构建基于[roadhog](https://github.com/sorrycc/roadhog)
 
